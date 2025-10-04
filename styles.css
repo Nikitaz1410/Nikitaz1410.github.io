@@ -375,26 +375,77 @@ p {
     background: #f8f9fa;
 }
 
-.mission-grid {
+.mission-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.mission-text {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.mission-text h3 {
+    color: #667eea;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.mission-text p {
+    margin-bottom: 2rem;
+    line-height: 1.7;
+    font-size: 1.1rem;
+}
+
+.mission-text strong {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Growth Section */
+.growth {
+    padding: 6rem 0;
+    background: white;
+}
+
+.growth-content {
+    margin-top: 2rem;
+}
+
+.growth-text {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.growth-text p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+}
+
+.growth-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
 }
 
-.mission-card {
-    background: white;
+.growth-card {
+    background: #f8f9fa;
     padding: 2rem;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
 
-.mission-card:hover {
+.growth-card:hover {
     transform: translateY(-10px);
 }
 
-.mission-icon {
+.growth-icon {
     width: 80px;
     height: 80px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -405,19 +456,193 @@ p {
     margin: 0 auto 1.5rem;
 }
 
-.mission-icon i {
+.growth-icon i {
     font-size: 2rem;
     color: white;
 }
 
-.mission-card h3 {
+.growth-card h3 {
     color: #333;
     margin-bottom: 1rem;
 }
 
-.mission-card p {
+.growth-card p {
     color: #666;
     line-height: 1.6;
+}
+
+/* Recruitment Section */
+.recruitment {
+    padding: 6rem 0;
+    background: #f8f9fa;
+}
+
+.recruitment-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.recruitment-text p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.recruitment-text strong {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.recruitment-cta {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.recruitment-cta h3 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.recruitment-cta p {
+    margin-bottom: 2rem;
+    color: #666;
+}
+
+/* Partners Section */
+.partners {
+    padding: 6rem 0;
+    background: white;
+}
+
+.partners-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.partners-text ul,
+.sponsors-text ul {
+    list-style: none;
+    padding: 0;
+}
+
+.partners-text li,
+.sponsors-text li {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.partners-text li::before,
+.sponsors-text li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+}
+
+.partners-text strong,
+.sponsors-text strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.partners-cta,
+.sponsors-cta {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.partners-cta h3,
+.sponsors-cta h3 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.partners-cta p,
+.sponsors-cta p {
+    margin-bottom: 2rem;
+    color: #666;
+}
+
+/* Sponsors Section */
+.sponsors {
+    padding: 6rem 0;
+    background: #f8f9fa;
+}
+
+.sponsors-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.sponsors-cta {
+    background: white;
+}
+
+/* Projects Note */
+.projects-note {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.projects-note p {
+    font-style: italic;
+    color: #666;
+    margin: 0;
+}
+
+/* Personal Contact */
+.personal-contact {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.personal-contact p {
+    margin: 0;
+    color: #333;
+}
+
+.personal-contact strong {
+    color: #667eea;
+}
+
+/* Contact Form Select */
+.form-group select {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    font-family: inherit;
+    background: white;
+}
+
+.form-group select:focus {
+    outline: none;
+    border-color: #667eea;
 }
 
 /* Projects Section */
@@ -804,6 +1029,16 @@ p {
     }
     
     .contact-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .recruitment-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .partners-content,
+    .sponsors-content {
         grid-template-columns: 1fr;
     }
     
