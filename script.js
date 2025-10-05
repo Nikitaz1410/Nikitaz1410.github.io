@@ -317,10 +317,15 @@ window.addEventListener('load', () => {
 
 // Particle system removed
 
-// Enhanced cursor system
+// Enhanced cursor system with performance optimizations
 let cursor = null;
 let cursorFollower = null;
 let hasMoved = false;
+let mouseX = 0;
+let mouseY = 0;
+let followerX = 0;
+let followerY = 0;
+let animationId = null;
 
 function createCursor() {
     if (cursor) return cursor;
@@ -342,7 +347,7 @@ function createCursor() {
     return cursor;
 }
 
-// Use transform instead of left/top for better performance
+// Optimized cursor update with smooth interpolation
 function updateCursor(e) {
     if (!cursor || !cursorFollower) return;
     
@@ -353,16 +358,61 @@ function updateCursor(e) {
         cursorFollower.style.opacity = '1';
     }
     
-    const x = e.clientX;
-    const y = e.clientY;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
     
-    // Use transform for hardware acceleration - much faster than left/top
-    cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    // Immediate cursor positioning for instant response
+    cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
     
-    // Follower with smooth interpolation
-    requestAnimationFrame(() => {
-        cursorFollower.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-    });
+    // Start smooth follower animation if not already running
+    if (!animationId) {
+        animateFollower();
+    }
+}
+
+// Smooth follower animation with optimized interpolation
+function animateFollower() {
+    if (!cursorFollower) return;
+    
+    // Calculate smooth interpolation with faster response
+    const easeFactor = 0.15; // Increased from default for faster response
+    followerX += (mouseX - followerX) * easeFactor;
+    followerY += (mouseY - followerY) * easeFactor;
+    
+    // Update follower position
+    cursorFollower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0)`;
+    
+    // Continue animation if cursor is still moving
+    const distance = Math.abs(mouseX - followerX) + Math.abs(mouseY - followerY);
+    if (distance > 0.1) {
+        animationId = requestAnimationFrame(animateFollower);
+    } else {
+        animationId = null;
+    }
+}
+
+// Ensure cursor visibility function
+function ensureCursorVisibility() {
+    if (!cursor || !cursorFollower) return;
+    
+    // Check if we're on desktop
+    const isDesktop = !('ontouchstart' in window || navigator.maxTouchPoints > 0) || window.innerWidth > 768;
+    
+    if (isDesktop) {
+        // Ensure cursor is visible on desktop
+        if (cursor.style.display === 'none') {
+            cursor.style.display = 'block';
+        }
+        if (cursorFollower.style.display === 'none') {
+            cursorFollower.style.display = 'block';
+        }
+        if (cursor.style.opacity === '0' && hasMoved) {
+            cursor.style.opacity = '1';
+        }
+        if (cursorFollower.style.opacity === '0' && hasMoved) {
+            cursorFollower.style.opacity = '1';
+        }
+    }
 }
 
 // Initialize cursor (desktop only)
@@ -370,11 +420,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Only create custom cursor on non-touch devices
     if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
         createCursor();
-        document.addEventListener('mousemove', updateCursor);
+        
+        // Throttled mouse move handler for better performance
+        let mouseMoveThrottle;
+        document.addEventListener('mousemove', (e) => {
+            if (mouseMoveThrottle) return;
+            
+            mouseMoveThrottle = requestAnimationFrame(() => {
+                updateCursor(e);
+                mouseMoveThrottle = null;
+            });
+        });
     }
     
-    // Remove cursor on mobile devices after clicks
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    // Remove cursor on mobile devices after clicks (improved detection)
+    const isMobileDevice = ('ontouchstart' in window || navigator.maxTouchPoints > 0) && window.innerWidth <= 768;
+    
+    if (isMobileDevice) {
         document.addEventListener('touchstart', () => {
             if (cursor) {
                 cursor.style.display = 'none';
@@ -392,6 +454,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 cursorFollower.style.display = 'none';
             }
         });
+    } else {
+        // Ensure cursor stays visible on desktop
+        document.addEventListener('click', () => {
+            if (cursor && cursor.style.display === 'none') {
+                cursor.style.display = 'block';
+            }
+            if (cursorFollower && cursorFollower.style.display === 'none') {
+                cursorFollower.style.display = 'block';
+            }
+        });
     }
     
     // Cursor interactions with different elements (desktop only)
@@ -400,6 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         interactiveElements.forEach(element => {
             element.addEventListener('mouseenter', () => {
+                ensureCursorVisibility(); // Ensure cursor is visible
                 cursor.classList.add('cursor-hover');
                 cursorFollower.classList.add('cursor-follower-hover');
             });
@@ -407,6 +480,11 @@ document.addEventListener('DOMContentLoaded', () => {
             element.addEventListener('mouseleave', () => {
                 cursor.classList.remove('cursor-hover');
                 cursorFollower.classList.remove('cursor-follower-hover');
+                ensureCursorVisibility(); // Ensure cursor stays visible
+            });
+            
+            element.addEventListener('click', () => {
+                ensureCursorVisibility(); // Ensure cursor stays visible after click
             });
         });
     }
@@ -416,26 +494,46 @@ document.addEventListener('DOMContentLoaded', () => {
         const logos = document.querySelectorAll('.logo-img, .hero-logo-img, .about-logo, .mission-logo-img');
         logos.forEach(logo => {
             logo.addEventListener('mouseenter', () => {
+                ensureCursorVisibility(); // Ensure cursor is visible
                 cursor.classList.add('cursor-logo-hover');
             });
             
             logo.addEventListener('mouseleave', () => {
                 cursor.classList.remove('cursor-logo-hover');
+                ensureCursorVisibility(); // Ensure cursor stays visible
+            });
+            
+            logo.addEventListener('click', () => {
+                ensureCursorVisibility(); // Ensure cursor stays visible after click
             });
         });
         
-        // Click effect with ripple (desktop only)
+        // Click effect with ripple (desktop only) - exclude form elements
         document.addEventListener('click', (e) => {
-            cursor.classList.add('cursor-click');
-            cursorFollower.classList.add('cursor-follower-click');
+            // Skip cursor click animation for form elements and invalid coordinates
+            const target = e.target;
+            const isFormElement = target.tagName === 'SELECT' || 
+                                  target.tagName === 'INPUT' || 
+                                  target.tagName === 'TEXTAREA' ||
+                                  target.closest('select') ||
+                                  target.closest('input') ||
+                                  target.closest('textarea');
             
-            // Create ripple effect
-            createRipple(e.clientX, e.clientY);
+            // Skip if coordinates are invalid (0,0 or negative)
+            const hasValidCoordinates = e.clientX > 0 && e.clientY > 0;
             
-            setTimeout(() => {
-                cursor.classList.remove('cursor-click');
-                cursorFollower.classList.remove('cursor-follower-click');
-            }, 150);
+            if (!isFormElement && hasValidCoordinates) {
+                cursor.classList.add('cursor-click');
+                cursorFollower.classList.add('cursor-follower-click');
+                
+                // Create ripple effect
+                createRipple(e.clientX, e.clientY);
+                
+                setTimeout(() => {
+                    cursor.classList.remove('cursor-click');
+                    cursorFollower.classList.remove('cursor-follower-click');
+                }, 150);
+            }
         });
     }
     
@@ -468,10 +566,23 @@ document.addEventListener('DOMContentLoaded', () => {
         // Cursor trail effect (desktop only)
         createCursorTrail();
     }
+    
+    // Periodic cursor visibility check
+    setInterval(ensureCursorVisibility, 1000);
+    
+    // Ensure cursor visibility on window resize
+    window.addEventListener('resize', () => {
+        setTimeout(ensureCursorVisibility, 100);
+    });
 });
 
-// Ripple effect function
+// Ripple effect function with coordinate validation
 function createRipple(x, y) {
+    // Validate coordinates to prevent ripple in wrong position
+    if (x <= 0 || y <= 0 || x > window.innerWidth || y > window.innerHeight) {
+        return; // Skip creating ripple for invalid coordinates
+    }
+    
     const ripple = document.createElement('div');
     ripple.className = 'cursor-ripple';
     ripple.style.cssText = `
@@ -495,45 +606,64 @@ function createRipple(x, y) {
     }, 600);
 }
 
-// Cursor trail system
+// Optimized cursor trail system
 function createCursorTrail() {
     const trail = [];
-    const trailLength = 10;
+    const trailLength = 8; // Reduced for better performance
+    const trailPositions = [];
     
     for (let i = 0; i < trailLength; i++) {
         const dot = document.createElement('div');
         dot.className = 'cursor-trail-dot';
         dot.style.cssText = `
             position: fixed;
-            width: ${6 - i * 0.5}px;
-            height: ${6 - i * 0.5}px;
+            width: ${6 - i * 0.4}px;
+            height: ${6 - i * 0.4}px;
             background: rgba(30, 58, 138, ${0.3 - i * 0.03});
             border-radius: 50%;
             pointer-events: none;
             z-index: 9995;
-            transition: all 0.1s ease;
+            will-change: transform;
+            transform: translate3d(-50%, -50%, 0);
         `;
         document.body.appendChild(dot);
         trail.push(dot);
+        trailPositions.push({ x: 0, y: 0 });
     }
     
-    let mouseX = 0, mouseY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
+    let trailIndex = 0;
+    let lastUpdateTime = 0;
+    const updateInterval = 16; // ~60fps
     
     function updateTrail() {
-        trail.forEach((dot, index) => {
-            const delay = index * 0.02;
-            setTimeout(() => {
-                dot.style.left = mouseX + 'px';
-                dot.style.top = mouseY + 'px';
-            }, delay * 1000);
-        });
+        const now = performance.now();
+        if (now - lastUpdateTime >= updateInterval) {
+            lastUpdateTime = now;
+            
+            // Update trail positions with optimized interpolation
+            trail.forEach((dot, index) => {
+                const targetIndex = (trailIndex - index + trailLength) % trailLength;
+                const target = trailPositions[targetIndex];
+                
+                if (target.x !== 0 || target.y !== 0) {
+                    dot.style.transform = `translate3d(${target.x}px, ${target.y}px, 0)`;
+                }
+            });
+        }
         requestAnimationFrame(updateTrail);
     }
+    
+    // Throttled mouse move handler
+    let mouseMoveTimeout;
+    document.addEventListener('mousemove', (e) => {
+        if (mouseMoveTimeout) return;
+        
+        mouseMoveTimeout = setTimeout(() => {
+            trailPositions[trailIndex] = { x: e.clientX, y: e.clientY };
+            trailIndex = (trailIndex + 1) % trailLength;
+            mouseMoveTimeout = null;
+        }, 8); // Throttle to ~120fps
+    });
     
     updateTrail();
 }
@@ -613,13 +743,13 @@ style.textContent = `
         white-space: normal;
     }
     
-    /* Enhanced Cursor Styles */
+    /* Enhanced Cursor Styles - Optimized for Performance */
     .cursor {
         position: fixed;
         pointer-events: none;
-        z-index: 9999;
+        z-index: 99999;
         mix-blend-mode: difference;
-        transition: opacity 0.3s ease;
+        transition: opacity 0.2s ease;
         will-change: transform;
         transform: translate3d(0, 0, 0);
     }
@@ -632,7 +762,8 @@ style.textContent = `
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate3d(-50%, -50%, 0);
+        will-change: transform;
     }
     
     .cursor-ring {
@@ -643,65 +774,72 @@ style.textContent = `
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        transition: all 0.3s ease;
+        transform: translate3d(-50%, -50%, 0);
+        transition: all 0.15s ease;
         transform-origin: center center;
+        will-change: transform;
     }
     
     .cursor-follower {
         position: fixed;
         pointer-events: none;
-        z-index: 9998;
+        z-index: 99998;
         width: 40px;
         height: 40px;
         background: radial-gradient(circle, rgba(30, 58, 138, 0.1), transparent);
         border-radius: 50%;
-        transition: all 0.15s ease, opacity 0.3s ease;
-        transform: translate(-50%, -50%);
+        transition: opacity 0.2s ease;
+        transform: translate3d(-50%, -50%, 0);
+        will-change: transform;
     }
     
-    /* Cursor States */
+    /* Cursor States - Optimized Transitions */
     .cursor-hover .cursor-ring {
         width: 50px;
         height: 50px;
         border-color: rgba(220, 38, 38, 0.6);
         border-width: 3px;
-        transform: translate(-50%, -50%);
+        transform: translate3d(-50%, -50%, 0);
+        transition: all 0.1s ease;
     }
     
     .cursor-hover .cursor-dot {
-        transform: translate(-50%, -50%) scale(1.5);
+        transform: translate3d(-50%, -50%, 0) scale(1.5);
+        transition: transform 0.1s ease;
     }
     
     .cursor-follower-hover {
         width: 60px;
         height: 60px;
         background: radial-gradient(circle, rgba(220, 38, 38, 0.2), transparent);
-        transform: translate(-50%, -50%);
+        transform: translate3d(-50%, -50%, 0);
+        transition: all 0.1s ease;
     }
     
-    /* Logo hover effect */
+    /* Logo hover effect - Optimized */
     .cursor-logo-hover .cursor-ring {
         width: 80px;
         height: 80px;
         border-color: rgba(8, 145, 178, 0.8);
         border-width: 4px;
         animation: rotate 2s linear infinite;
-        transform: translate(-50%, -50%);
+        transform: translate3d(-50%, -50%, 0);
+        transition: all 0.1s ease;
     }
     
     .cursor-logo-hover .cursor-dot {
         background: linear-gradient(135deg, #0891b2, #1e3a8a, #dc2626);
-        transform: translate(-50%, -50%) scale(2);
+        transform: translate3d(-50%, -50%, 0) scale(2);
+        transition: transform 0.1s ease;
     }
     
-    /* Click effect */
+    /* Click effect - Optimized */
     .cursor-click .cursor-ring {
         border-color: rgba(30, 58, 138, 1);
         width: 60px;
         height: 60px;
-        animation: pulse 0.15s ease;
-        transform: translate(-50%, -50%);
+        animation: pulse 0.1s ease;
+        transform: translate3d(-50%, -50%, 0);
         transform-origin: center center;
     }
     
@@ -709,20 +847,20 @@ style.textContent = `
         width: 80px;
         height: 80px;
         background: radial-gradient(circle, rgba(30, 58, 138, 0.3), transparent);
-        animation: expand 0.15s ease;
-        transform: translate(-50%, -50%);
+        animation: expand 0.1s ease;
+        transform: translate3d(-50%, -50%, 0);
         transform-origin: center center;
     }
     
     @keyframes pulse {
-        0% { transform: translate(-50%, -50%) scale(1); }
-        50% { transform: translate(-50%, -50%) scale(1.1); }
-        100% { transform: translate(-50%, -50%) scale(1); }
+        0% { transform: translate3d(-50%, -50%, 0) scale(1); }
+        50% { transform: translate3d(-50%, -50%, 0) scale(1.1); }
+        100% { transform: translate3d(-50%, -50%, 0) scale(1); }
     }
     
     @keyframes expand {
-        0% { transform: translate(-50%, -50%) scale(1); }
-        100% { transform: translate(-50%, -50%) scale(1.5); }
+        0% { transform: translate3d(-50%, -50%, 0) scale(1); }
+        100% { transform: translate3d(-50%, -50%, 0) scale(1.5); }
     }
     
     /* Hide default cursor on interactive elements (desktop only) */
@@ -750,9 +888,9 @@ style.textContent = `
         }
     }
     
-    /* Cursor trail styles */
+    /* Cursor trail styles - Optimized */
     .cursor-trail-dot {
-        transition: all 0.1s ease;
+        will-change: transform;
     }
     
     /* Magnetic element transitions */
