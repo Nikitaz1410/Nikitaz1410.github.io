@@ -312,58 +312,189 @@ window.addEventListener('load', () => {
         }, 500);
     }
     
-    // Create floating particles
-    createParticles();
+    // Particles removed as requested
 });
 
-// Particle system
-function createParticles() {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
-    
-    const particleCount = 50;
-    
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.cssText = `
-            position: absolute;
-            width: ${Math.random() * 4 + 1}px;
-            height: ${Math.random() * 4 + 1}px;
-            background: rgba(30, 58, 138, ${Math.random() * 0.5 + 0.1});
-            border-radius: 50%;
-            left: ${Math.random() * 100}%;
-            top: ${Math.random() * 100}%;
-            pointer-events: none;
-            animation: float ${Math.random() * 20 + 10}s infinite linear;
-        `;
-        
-        hero.appendChild(particle);
-    }
-}
+// Particle system removed
 
-// Mouse interaction effects
-document.addEventListener('mousemove', (e) => {
-    const cursor = document.querySelector('.cursor') || createCursor();
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-});
+// Enhanced cursor system
+let cursor = null;
+let cursorFollower = null;
 
 function createCursor() {
-    const cursor = document.createElement('div');
+    if (cursor) return cursor;
+    
+    cursor = document.createElement('div');
     cursor.className = 'cursor';
-    cursor.style.cssText = `
+    cursor.innerHTML = '<div class="cursor-dot"></div><div class="cursor-ring"></div>';
+    
+    cursorFollower = document.createElement('div');
+    cursorFollower.className = 'cursor-follower';
+    
+    document.body.appendChild(cursor);
+    document.body.appendChild(cursorFollower);
+    
+    return cursor;
+}
+
+function updateCursor(e) {
+    if (!cursor || !cursorFollower) return;
+    
+    const x = e.clientX;
+    const y = e.clientY;
+    
+    cursor.style.left = x + 'px';
+    cursor.style.top = y + 'px';
+    
+    // Follower with delay
+    requestAnimationFrame(() => {
+        cursorFollower.style.left = x + 'px';
+        cursorFollower.style.top = y + 'px';
+    });
+}
+
+// Initialize cursor
+document.addEventListener('DOMContentLoaded', () => {
+    createCursor();
+    
+    document.addEventListener('mousemove', updateCursor);
+    
+    // Cursor interactions with different elements
+    const interactiveElements = document.querySelectorAll('a, button, .btn, .project-card, .team-card, .growth-card, .floating-card');
+    
+    interactiveElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            cursor.classList.add('cursor-hover');
+            cursorFollower.classList.add('cursor-follower-hover');
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            cursor.classList.remove('cursor-hover');
+            cursorFollower.classList.remove('cursor-follower-hover');
+        });
+    });
+    
+    // Special hover for logo
+    const logos = document.querySelectorAll('.logo-img, .hero-logo-img, .about-logo, .mission-logo-img');
+    logos.forEach(logo => {
+        logo.addEventListener('mouseenter', () => {
+            cursor.classList.add('cursor-logo-hover');
+        });
+        
+        logo.addEventListener('mouseleave', () => {
+            cursor.classList.remove('cursor-logo-hover');
+        });
+    });
+    
+    // Click effect with ripple
+    document.addEventListener('click', (e) => {
+        cursor.classList.add('cursor-click');
+        cursorFollower.classList.add('cursor-follower-click');
+        
+        // Create ripple effect
+        createRipple(e.clientX, e.clientY);
+        
+        setTimeout(() => {
+            cursor.classList.remove('cursor-click');
+            cursorFollower.classList.remove('cursor-follower-click');
+        }, 150);
+    });
+    
+    // Magnetic effect for buttons
+    const magneticElements = document.querySelectorAll('.btn, .logo-img, .hero-logo-img');
+    magneticElements.forEach(element => {
+        element.addEventListener('mousemove', (e) => {
+            const rect = element.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            const distance = Math.sqrt(x * x + y * y);
+            const maxDistance = 100;
+            
+            if (distance < maxDistance) {
+                const force = (maxDistance - distance) / maxDistance;
+                const moveX = x * force * 0.2;
+                const moveY = y * force * 0.2;
+                
+                element.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            }
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            element.style.transform = 'translate(0, 0)';
+        });
+    });
+    
+    // Cursor trail effect
+    createCursorTrail();
+});
+
+// Ripple effect function
+function createRipple(x, y) {
+    const ripple = document.createElement('div');
+    ripple.className = 'cursor-ripple';
+    ripple.style.cssText = `
         position: fixed;
+        left: ${x}px;
+        top: ${y}px;
         width: 20px;
         height: 20px;
-        background: radial-gradient(circle, rgba(30, 58, 138, 0.3), transparent);
+        background: radial-gradient(circle, rgba(30, 58, 138, 0.5), transparent);
         border-radius: 50%;
         pointer-events: none;
-        z-index: 9999;
-        transition: transform 0.1s ease;
+        z-index: 9997;
+        transform: translate(-50%, -50%);
+        animation: ripple-expand 0.6s ease-out forwards;
     `;
-    document.body.appendChild(cursor);
-    return cursor;
+    
+    document.body.appendChild(ripple);
+    
+    setTimeout(() => {
+        ripple.remove();
+    }, 600);
+}
+
+// Cursor trail system
+function createCursorTrail() {
+    const trail = [];
+    const trailLength = 10;
+    
+    for (let i = 0; i < trailLength; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'cursor-trail-dot';
+        dot.style.cssText = `
+            position: fixed;
+            width: ${6 - i * 0.5}px;
+            height: ${6 - i * 0.5}px;
+            background: rgba(30, 58, 138, ${0.3 - i * 0.03});
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9995;
+            transition: all 0.1s ease;
+        `;
+        document.body.appendChild(dot);
+        trail.push(dot);
+    }
+    
+    let mouseX = 0, mouseY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+    
+    function updateTrail() {
+        trail.forEach((dot, index) => {
+            const delay = index * 0.02;
+            setTimeout(() => {
+                dot.style.left = mouseX + 'px';
+                dot.style.top = mouseY + 'px';
+            }, delay * 1000);
+        });
+        requestAnimationFrame(updateTrail);
+    }
+    
+    updateTrail();
 }
 
 // Enhanced button interactions
@@ -434,34 +565,159 @@ style.textContent = `
         }
     }
     
-    .particle {
-        animation-name: particle-float;
-    }
-    
-    @keyframes particle-float {
-        0% {
-            transform: translateY(100vh) rotate(0deg);
-            opacity: 0;
-        }
-        10% {
-            opacity: 1;
-        }
-        90% {
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(-100vh) rotate(360deg);
-            opacity: 0;
-        }
-    }
+    /* Particle styles removed */
     
     .hero-title {
         overflow: visible;
         white-space: normal;
     }
     
+    /* Enhanced Cursor Styles */
     .cursor {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
         mix-blend-mode: difference;
+        transition: transform 0.1s ease;
+    }
+    
+    .cursor-dot {
+        width: 8px;
+        height: 8px;
+        background: linear-gradient(135deg, #1e3a8a, #dc2626, #0891b2);
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .cursor-ring {
+        width: 30px;
+        height: 30px;
+        border: 2px solid rgba(30, 58, 138, 0.3);
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease;
+    }
+    
+    .cursor-follower {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9998;
+        width: 40px;
+        height: 40px;
+        background: radial-gradient(circle, rgba(30, 58, 138, 0.1), transparent);
+        border-radius: 50%;
+        transition: all 0.15s ease;
+        transform: translate(-50%, -50%);
+    }
+    
+    /* Cursor States */
+    .cursor-hover .cursor-ring {
+        width: 50px;
+        height: 50px;
+        border-color: rgba(220, 38, 38, 0.6);
+        border-width: 3px;
+    }
+    
+    .cursor-hover .cursor-dot {
+        transform: translate(-50%, -50%) scale(1.5);
+    }
+    
+    .cursor-follower-hover {
+        width: 60px;
+        height: 60px;
+        background: radial-gradient(circle, rgba(220, 38, 38, 0.2), transparent);
+    }
+    
+    /* Logo hover effect */
+    .cursor-logo-hover .cursor-ring {
+        width: 80px;
+        height: 80px;
+        border-color: rgba(8, 145, 178, 0.8);
+        border-width: 4px;
+        animation: rotate 2s linear infinite;
+    }
+    
+    .cursor-logo-hover .cursor-dot {
+        background: linear-gradient(135deg, #0891b2, #1e3a8a, #dc2626);
+        transform: translate(-50%, -50%) scale(2);
+    }
+    
+    /* Click effect */
+    .cursor-click .cursor-ring {
+        border-color: rgba(30, 58, 138, 1);
+        width: 60px;
+        height: 60px;
+        animation: pulse 0.15s ease;
+    }
+    
+    .cursor-follower-click {
+        width: 80px;
+        height: 80px;
+        background: radial-gradient(circle, rgba(30, 58, 138, 0.3), transparent);
+        animation: expand 0.15s ease;
+    }
+    
+    @keyframes expand {
+        0% { transform: translate(-50%, -50%) scale(1); }
+        100% { transform: translate(-50%, -50%) scale(1.5); }
+    }
+    
+    /* Hide default cursor on interactive elements */
+    a, button, .btn, .project-card, .team-card, .growth-card, .floating-card, 
+    .logo-img, .hero-logo-img, .about-logo, .mission-logo-img {
+        cursor: none;
+    }
+    
+    /* Smooth cursor transitions */
+    .cursor, .cursor-follower {
+        transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    /* Ripple animation */
+    @keyframes ripple-expand {
+        0% {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(10);
+            opacity: 0;
+        }
+    }
+    
+    /* Cursor trail styles */
+    .cursor-trail-dot {
+        transition: all 0.1s ease;
+    }
+    
+    /* Magnetic element transitions */
+    .btn, .logo-img, .hero-logo-img {
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    /* Enhanced cursor blend modes */
+    .cursor-hover {
+        mix-blend-mode: difference;
+    }
+    
+    .cursor-logo-hover {
+        mix-blend-mode: multiply;
+    }
+    
+    /* Cursor glow effect */
+    .cursor-logo-hover .cursor-ring {
+        box-shadow: 0 0 20px rgba(8, 145, 178, 0.5);
+    }
+    
+    /* Performance optimizations */
+    .cursor, .cursor-follower, .cursor-trail-dot, .cursor-ripple {
+        will-change: transform, opacity;
     }
     
     /* Enhanced hover effects for cards */
