@@ -743,8 +743,9 @@ style.textContent = `
         animation: bounce 1s ease;
     }
     
+    /* Remove growth icon animation to prevent movement */
     .growth-card:hover .growth-icon {
-        animation: pulse 2s infinite;
+        animation: none;
     }
     
     /* Smooth transitions for all interactive elements */
