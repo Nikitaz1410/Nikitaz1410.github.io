@@ -353,80 +353,88 @@ function updateCursor(e) {
     });
 }
 
-// Initialize cursor
+// Initialize cursor (desktop only)
 document.addEventListener('DOMContentLoaded', () => {
-    createCursor();
+    // Only create custom cursor on non-touch devices
+    if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
+        createCursor();
+        document.addEventListener('mousemove', updateCursor);
+    }
     
-    document.addEventListener('mousemove', updateCursor);
-    
-    // Cursor interactions with different elements
-    const interactiveElements = document.querySelectorAll('a, button, .btn, .project-card, .team-card, .growth-card, .floating-card');
-    
-    interactiveElements.forEach(element => {
-        element.addEventListener('mouseenter', () => {
-            cursor.classList.add('cursor-hover');
-            cursorFollower.classList.add('cursor-follower-hover');
-        });
+    // Cursor interactions with different elements (desktop only)
+    if (cursor && cursorFollower) {
+        const interactiveElements = document.querySelectorAll('a, button, .btn, .project-card, .team-card, .growth-card, .floating-card');
         
-        element.addEventListener('mouseleave', () => {
-            cursor.classList.remove('cursor-hover');
-            cursorFollower.classList.remove('cursor-follower-hover');
-        });
-    });
-    
-    // Special hover for logo
-    const logos = document.querySelectorAll('.logo-img, .hero-logo-img, .about-logo, .mission-logo-img');
-    logos.forEach(logo => {
-        logo.addEventListener('mouseenter', () => {
-            cursor.classList.add('cursor-logo-hover');
-        });
-        
-        logo.addEventListener('mouseleave', () => {
-            cursor.classList.remove('cursor-logo-hover');
-        });
-    });
-    
-    // Click effect with ripple
-    document.addEventListener('click', (e) => {
-        cursor.classList.add('cursor-click');
-        cursorFollower.classList.add('cursor-follower-click');
-        
-        // Create ripple effect
-        createRipple(e.clientX, e.clientY);
-        
-        setTimeout(() => {
-            cursor.classList.remove('cursor-click');
-            cursorFollower.classList.remove('cursor-follower-click');
-        }, 150);
-    });
-    
-    // Magnetic effect for buttons
-    const magneticElements = document.querySelectorAll('.btn, .logo-img, .hero-logo-img');
-    magneticElements.forEach(element => {
-        element.addEventListener('mousemove', (e) => {
-            const rect = element.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('cursor-hover');
+                cursorFollower.classList.add('cursor-follower-hover');
+            });
             
-            const distance = Math.sqrt(x * x + y * y);
-            const maxDistance = 100;
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('cursor-hover');
+                cursorFollower.classList.remove('cursor-follower-hover');
+            });
+        });
+    }
+    
+    // Special hover for logo (desktop only)
+    if (cursor) {
+        const logos = document.querySelectorAll('.logo-img, .hero-logo-img, .about-logo, .mission-logo-img');
+        logos.forEach(logo => {
+            logo.addEventListener('mouseenter', () => {
+                cursor.classList.add('cursor-logo-hover');
+            });
             
-            if (distance < maxDistance) {
-                const force = (maxDistance - distance) / maxDistance;
-                const moveX = x * force * 0.2;
-                const moveY = y * force * 0.2;
+            logo.addEventListener('mouseleave', () => {
+                cursor.classList.remove('cursor-logo-hover');
+            });
+        });
+        
+        // Click effect with ripple (desktop only)
+        document.addEventListener('click', (e) => {
+            cursor.classList.add('cursor-click');
+            cursorFollower.classList.add('cursor-follower-click');
+            
+            // Create ripple effect
+            createRipple(e.clientX, e.clientY);
+            
+            setTimeout(() => {
+                cursor.classList.remove('cursor-click');
+                cursorFollower.classList.remove('cursor-follower-click');
+            }, 150);
+        });
+    }
+    
+    // Magnetic effect for buttons (desktop only)
+    if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
+        const magneticElements = document.querySelectorAll('.btn, .logo-img, .hero-logo-img');
+        magneticElements.forEach(element => {
+            element.addEventListener('mousemove', (e) => {
+                const rect = element.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
                 
-                element.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            }
+                const distance = Math.sqrt(x * x + y * y);
+                const maxDistance = 100;
+                
+                if (distance < maxDistance) {
+                    const force = (maxDistance - distance) / maxDistance;
+                    const moveX = x * force * 0.2;
+                    const moveY = y * force * 0.2;
+                    
+                    element.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                }
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                element.style.transform = 'translate(0, 0)';
+            });
         });
         
-        element.addEventListener('mouseleave', () => {
-            element.style.transform = 'translate(0, 0)';
-        });
-    });
-    
-    // Cursor trail effect
-    createCursorTrail();
+        // Cursor trail effect (desktop only)
+        createCursorTrail();
+    }
 });
 
 // Ripple effect function
@@ -682,10 +690,12 @@ style.textContent = `
         100% { transform: translate(-50%, -50%) scale(1.5); }
     }
     
-    /* Hide default cursor on interactive elements */
-    a, button, .btn, .project-card, .team-card, .growth-card, .floating-card, 
-    .logo-img, .hero-logo-img, .about-logo, .mission-logo-img {
-        cursor: none;
+    /* Hide default cursor on interactive elements (desktop only) */
+    @media (hover: hover) and (pointer: fine) {
+        a, button, .btn, .project-card, .team-card, .growth-card, .floating-card, 
+        .logo-img, .hero-logo-img, .about-logo, .mission-logo-img {
+            cursor: none;
+        }
     }
     
     /* Smooth cursor transitions */
