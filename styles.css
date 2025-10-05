@@ -51,7 +51,7 @@ p {
 
 /* Gradient Text */
 .gradient-text {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #0891b2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -72,23 +72,23 @@ p {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #0891b2 100%);
     color: white;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 10px 25px rgba(30, 58, 138, 0.4);
 }
 
 .btn-secondary {
     background: transparent;
-    color: #667eea;
-    border: 2px solid #667eea;
+    color: #1e3a8a;
+    border: 2px solid #1e3a8a;
 }
 
 .btn-secondary:hover {
-    background: #667eea;
+    background: #1e3a8a;
     color: white;
     transform: translateY(-2px);
 }
@@ -117,14 +117,11 @@ p {
 .nav-logo {
     display: flex;
     align-items: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #667eea;
 }
 
-.nav-logo i {
-    margin-right: 0.5rem;
-    font-size: 1.8rem;
+.logo-img {
+    height: 40px;
+    width: auto;
 }
 
 .nav-menu {
@@ -142,7 +139,7 @@ p {
 }
 
 .nav-link:hover {
-    color: #667eea;
+    color: #1e3a8a;
 }
 
 .nav-link::after {
@@ -152,7 +149,7 @@ p {
     height: 2px;
     bottom: -5px;
     left: 0;
-    background: #667eea;
+    background: #1e3a8a;
     transition: width 0.3s ease;
 }
 
@@ -258,7 +255,7 @@ p {
 
 .floating-card i {
     font-size: 2rem;
-    color: #667eea;
+    color: #1e3a8a;
 }
 
 .floating-card span {
@@ -331,7 +328,7 @@ p {
     display: block;
     font-size: 2.5rem;
     font-weight: 700;
-    color: #667eea;
+    color: #1e3a8a;
     margin-bottom: 0.5rem;
 }
 
@@ -349,7 +346,7 @@ p {
 .image-placeholder {
     width: 300px;
     height: 300px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #0891b2 100%);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -388,7 +385,7 @@ p {
 }
 
 .mission-text h3 {
-    color: #667eea;
+    color: #1e3a8a;
     margin-bottom: 1rem;
     font-size: 1.5rem;
 }
@@ -448,7 +445,7 @@ p {
 .growth-icon {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #0891b2 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -491,7 +488,7 @@ p {
 }
 
 .recruitment-text strong {
-    color: #667eea;
+    color: #1e3a8a;
     font-weight: 600;
 }
 
@@ -545,7 +542,7 @@ p {
     content: '✓';
     position: absolute;
     left: 0;
-    color: #667eea;
+    color: #1e3a8a;
     font-weight: bold;
 }
 
@@ -642,7 +639,7 @@ p {
 
 .form-group select:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #1e3a8a;
 }
 
 /* Projects Section */
@@ -671,7 +668,7 @@ p {
 
 .project-image {
     height: 200px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #0891b2 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -705,7 +702,7 @@ p {
 
 .tag {
     background: #f0f0f0;
-    color: #667eea;
+    color: #1e3a8a;
     padding: 0.3rem 0.8rem;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -714,33 +711,50 @@ p {
 
 /* Team Section */
 .team {
-    padding: 6rem 0;
-    background: #f8f9fa;
+    padding: 80px 0;
+    background: #f9fafc;
 }
 
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 2rem;
+    margin-top: 2rem;
 }
 
 .team-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 20px;
     text-align: center;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
 }
 
 .team-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
+}
+
+.team-image i {
+    font-size: 4rem;
+    color: #1e3a8a;
+    margin-bottom: 1rem;
+}
+
+.team-card h3 {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.team-card p {
+    font-size: 0.95rem;
+    color: #555;
 }
 
 .team-avatar {
     width: 100px;
     height: 100px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #0891b2 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -753,13 +767,8 @@ p {
     color: white;
 }
 
-.team-card h3 {
-    color: #333;
-    margin-bottom: 0.5rem;
-}
-
 .team-role {
-    color: #667eea;
+    color: #1e3a8a;
     font-weight: 600;
     margin-bottom: 1rem;
 }
@@ -785,12 +794,12 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #667eea;
+    color: #1e3a8a;
     transition: all 0.3s ease;
 }
 
 .team-social a:hover {
-    background: #667eea;
+    background: #1e3a8a;
     color: white;
     transform: translateY(-2px);
 }
@@ -831,7 +840,7 @@ p {
 .contact-method i {
     width: 50px;
     height: 50px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #0891b2 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -879,7 +888,7 @@ p {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #1e3a8a;
 }
 
 .form-group textarea {
@@ -904,14 +913,12 @@ p {
 .footer-logo {
     display: flex;
     align-items: center;
-    font-size: 1.5rem;
-    font-weight: 700;
     margin-bottom: 1rem;
 }
 
-.footer-logo i {
-    margin-right: 0.5rem;
-    color: #667eea;
+.footer-logo .logo-img {
+    height: 50px;
+    width: auto;
 }
 
 .footer-section h4 {
@@ -934,7 +941,7 @@ p {
 }
 
 .footer-section ul li a:hover {
-    color: #667eea;
+    color: #1e3a8a;
 }
 
 .footer-social {
@@ -956,7 +963,7 @@ p {
 }
 
 .footer-social a:hover {
-    background: #667eea;
+    background: #1e3a8a;
     transform: translateY(-2px);
 }
 
@@ -1063,6 +1070,14 @@ p {
     
     .container {
         padding: 0 15px;
+    }
+    
+    .logo-img {
+        height: 35px;
+    }
+    
+    .footer-logo .logo-img {
+        height: 40px;
     }
 }
 
