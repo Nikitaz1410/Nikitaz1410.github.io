@@ -372,7 +372,6 @@ p {
     background: radial-gradient(circle at 20% 80%, rgba(30, 58, 138, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 40% 40%, rgba(8, 145, 178, 0.1) 0%, transparent 50%);
-    animation: float 20s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -554,7 +553,7 @@ p {
 .about {
     padding: 8rem 0 6rem 0;
     background: white;
-    margin-top: 2rem;
+    margin-top: 4rem;
 }
 
 .about-content {
