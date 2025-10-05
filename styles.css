@@ -398,8 +398,10 @@ p {
 
 .hero-title {
     margin-bottom: 1.5rem;
-    font-size: 3.5rem;
-    line-height: 1.1;
+    font-size: 2.8rem;
+    line-height: 1.2;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .hero-description {
@@ -1297,7 +1299,7 @@ p {
     }
     
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     
     .hero-buttons {
@@ -1361,7 +1363,7 @@ p {
 
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     
     .hero-description {

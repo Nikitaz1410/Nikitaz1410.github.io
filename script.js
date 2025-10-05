@@ -299,25 +299,17 @@ window.addEventListener('load', () => {
         heroVisual.style.animation = 'fadeInRight 1s ease-out 0.3s both';
     }
     
-    // Add typing effect to hero title
+    // Add subtle fade-in effect to hero title
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
-        const text = heroTitle.innerHTML;
-        heroTitle.innerHTML = '';
-        heroTitle.style.borderRight = '2px solid #1e3a8a';
+        heroTitle.style.opacity = '0';
+        heroTitle.style.transform = 'translateY(20px)';
+        heroTitle.style.transition = 'opacity 1s ease, transform 1s ease';
         
-        let i = 0;
-        const typeWriter = () => {
-            if (i < text.length) {
-                heroTitle.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 50);
-            } else {
-                heroTitle.style.borderRight = 'none';
-            }
-        };
-        
-        setTimeout(typeWriter, 1000);
+        setTimeout(() => {
+            heroTitle.style.opacity = '1';
+            heroTitle.style.transform = 'translateY(0)';
+        }, 500);
     }
     
     // Create floating particles
@@ -464,18 +456,8 @@ style.textContent = `
     }
     
     .hero-title {
-        overflow: hidden;
-        white-space: nowrap;
-    }
-    
-    .hero-title.typing {
-        border-right: 2px solid #1e3a8a;
-        animation: blink 1s infinite;
-    }
-    
-    @keyframes blink {
-        0%, 50% { border-color: #1e3a8a; }
-        51%, 100% { border-color: transparent; }
+        overflow: visible;
+        white-space: normal;
     }
     
     .cursor {
