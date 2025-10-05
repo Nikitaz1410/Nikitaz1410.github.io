@@ -1418,7 +1418,7 @@ p {
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 80px;
+        top: 70px;
         flex-direction: column;
         background-color: white;
         width: 100%;
@@ -1876,6 +1876,10 @@ p {
     
     .nav-container {
         padding: 0 10px;
+    }
+    
+    .nav-menu {
+        top: 60px;
     }
     
     .logo-img {
