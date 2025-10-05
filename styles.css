@@ -550,8 +550,9 @@ p {
 
 /* About Section */
 .about {
-    padding: 6rem 0;
+    padding: 8rem 0 6rem 0;
     background: white;
+    margin-top: 2rem;
 }
 
 .about-content {
@@ -1472,7 +1473,7 @@ p {
     }
     
     .hero-content {
-        padding-top: 40px;
+        padding-top: 80px;
         min-height: calc(100vh - 70px);
     }
     
@@ -1681,7 +1682,11 @@ p {
         min-height: 100vh;
     }
     
-    .about,
+    .about {
+        padding: 4rem 0 3rem 0;
+        margin-top: 3rem;
+    }
+    
     .mission,
     .projects,
     .growth,
@@ -1845,11 +1850,15 @@ p {
     }
     
     .hero-content {
-        padding-top: 30px;
+        padding-top: 70px;
         min-height: calc(100vh - 60px);
     }
     
-    .about,
+    .about {
+        padding: 4rem 0 2rem 0;
+        margin-top: 4rem;
+    }
+    
     .mission,
     .projects,
     .growth,
