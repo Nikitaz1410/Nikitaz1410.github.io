@@ -320,6 +320,7 @@ window.addEventListener('load', () => {
 // Enhanced cursor system
 let cursor = null;
 let cursorFollower = null;
+let hasMoved = false;
 
 function createCursor() {
     if (cursor) return cursor;
@@ -331,25 +332,36 @@ function createCursor() {
     cursorFollower = document.createElement('div');
     cursorFollower.className = 'cursor-follower';
     
+    // Initially hide cursor until first movement
+    cursor.style.opacity = '0';
+    cursorFollower.style.opacity = '0';
+    
     document.body.appendChild(cursor);
     document.body.appendChild(cursorFollower);
     
     return cursor;
 }
 
+// Use transform instead of left/top for better performance
 function updateCursor(e) {
     if (!cursor || !cursorFollower) return;
+    
+    // Show cursor on first movement
+    if (!hasMoved) {
+        hasMoved = true;
+        cursor.style.opacity = '1';
+        cursorFollower.style.opacity = '1';
+    }
     
     const x = e.clientX;
     const y = e.clientY;
     
-    cursor.style.left = x + 'px';
-    cursor.style.top = y + 'px';
+    // Use transform for hardware acceleration - much faster than left/top
+    cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
     
-    // Follower with delay
+    // Follower with smooth interpolation
     requestAnimationFrame(() => {
-        cursorFollower.style.left = x + 'px';
-        cursorFollower.style.top = y + 'px';
+        cursorFollower.style.transform = `translate3d(${x}px, ${y}px, 0)`;
     });
 }
 
@@ -359,6 +371,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
         createCursor();
         document.addEventListener('mousemove', updateCursor);
+    }
+    
+    // Remove cursor on mobile devices after clicks
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        document.addEventListener('touchstart', () => {
+            if (cursor) {
+                cursor.style.display = 'none';
+            }
+            if (cursorFollower) {
+                cursorFollower.style.display = 'none';
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            if (cursor) {
+                cursor.style.display = 'none';
+            }
+            if (cursorFollower) {
+                cursorFollower.style.display = 'none';
+            }
+        });
     }
     
     // Cursor interactions with different elements (desktop only)
@@ -586,7 +619,9 @@ style.textContent = `
         pointer-events: none;
         z-index: 9999;
         mix-blend-mode: difference;
-        transition: transform 0.1s ease;
+        transition: opacity 0.3s ease;
+        will-change: transform;
+        transform: translate3d(0, 0, 0);
     }
     
     .cursor-dot {
@@ -621,7 +656,7 @@ style.textContent = `
         height: 40px;
         background: radial-gradient(circle, rgba(30, 58, 138, 0.1), transparent);
         border-radius: 50%;
-        transition: all 0.15s ease;
+        transition: all 0.15s ease, opacity 0.3s ease;
         transform: translate(-50%, -50%);
     }
     
