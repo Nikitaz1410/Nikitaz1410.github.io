@@ -1583,32 +1583,8 @@ p {
         gap: 2rem;
     }
     
-    .floating-card {
-        position: relative;
-        margin: 1.5rem auto;
-        animation: none;
-        max-width: 280px;
-        width: 100%;
-        padding: 1.5rem;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
-    
     .hero-visual {
-        height: auto;
-        flex-direction: column;
-        padding: 2rem 0 4rem 0;
-        gap: 1rem;
-        margin-bottom: 2rem;
-    }
-    
-    .floating-card i {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .floating-card span {
-        font-size: 1rem;
-        font-weight: 600;
+        display: none;
     }
     
     h1 {
