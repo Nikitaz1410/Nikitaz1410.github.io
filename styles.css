@@ -295,8 +295,13 @@ p {
 }
 
 .logo-img {
-    height: 40px;
+    height: 60px;
     width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.1);
 }
 
 .nav-menu {
@@ -394,6 +399,24 @@ p {
 .hero-content {
     z-index: 2;
     animation: fadeInLeft 1s ease-out;
+}
+
+.hero-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.hero-logo-img {
+    height: 120px;
+    width: auto;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+    transition: all 0.3s ease;
+    animation: float 6s ease-in-out infinite;
+}
+
+.hero-logo-img:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.2));
 }
 
 .hero-title {
@@ -499,6 +522,23 @@ p {
     color: #666;
 }
 
+.mission-logo {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.mission-logo-img {
+    height: 60px;
+    width: auto;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.mission-logo-img:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
 /* About Section */
 .about {
     padding: 6rem 0;
@@ -576,6 +616,13 @@ p {
     font-size: 1.2rem;
     color: white;
     margin: 0;
+}
+
+.about-logo {
+    height: 80px;
+    width: auto;
+    margin-bottom: 1rem;
+    filter: brightness(1.2);
 }
 
 /* Mission Section */
@@ -1197,8 +1244,13 @@ p {
 }
 
 .footer-logo .logo-img {
-    height: 50px;
+    height: 80px;
     width: auto;
+    transition: transform 0.3s ease;
+}
+
+.footer-logo .logo-img:hover {
+    transform: scale(1.05);
 }
 
 .footer-section h4 {
@@ -1353,10 +1405,22 @@ p {
     }
     
     .logo-img {
-        height: 35px;
+        height: 50px;
     }
     
     .footer-logo .logo-img {
+        height: 60px;
+    }
+    
+    .hero-logo-img {
+        height: 80px;
+    }
+    
+    .about-logo {
+        height: 60px;
+    }
+    
+    .mission-logo-img {
         height: 40px;
     }
 }
@@ -1385,5 +1449,17 @@ p {
     .mission-card,
     .team-card {
         margin-bottom: 1rem;
+    }
+    
+    .hero-logo-img {
+        height: 60px;
+    }
+    
+    .about-logo {
+        height: 50px;
+    }
+    
+    .mission-logo-img {
+        height: 35px;
     }
 }
