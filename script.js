@@ -183,30 +183,32 @@ function showNotification(message, type = 'info') {
     }, 5000);
 }
 
-// Intersection Observer for animations
+// Enhanced Intersection Observer for scroll animations
 const observerOptions = {
     threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    rootMargin: '0px 0px -100px 0px'
 };
 
-const observer = new IntersectionObserver((entries) => {
+const scrollObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.classList.add('animated');
         }
     });
 }, observerOptions);
 
 // Observe elements for animation
 document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.mission-card, .project-card, .team-card, .stat');
+    const animateElements = document.querySelectorAll('.animate-on-scroll');
     
     animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+        scrollObserver.observe(el);
+    });
+    
+    // Add staggered animation for team cards
+    const teamCards = document.querySelectorAll('.team-card');
+    teamCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
     });
 });
 
@@ -248,13 +250,27 @@ if (statsSection) {
     statsObserver.observe(statsSection);
 }
 
-// Parallax effect for hero section
+// Enhanced parallax effects
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
-    const heroVisual = document.querySelector('.hero-visual');
     
+    // Hero section parallax
+    const heroVisual = document.querySelector('.hero-visual');
     if (heroVisual) {
         heroVisual.style.transform = `translateY(${scrolled * 0.1}px)`;
+    }
+    
+    // Floating cards enhanced movement
+    const floatingCards = document.querySelectorAll('.floating-card');
+    floatingCards.forEach((card, index) => {
+        const speed = 0.05 + (index * 0.02);
+        card.style.transform = `translateY(${scrolled * speed}px)`;
+    });
+    
+    // Background elements parallax
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        hero.style.transform = `translateY(${scrolled * 0.02}px)`;
     }
 });
 
@@ -267,16 +283,143 @@ navLinks.forEach(link => {
     });
 });
 
-// Loading animation
+// Enhanced loading animation
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
+    
+    // Animate hero elements on load
+    const heroContent = document.querySelector('.hero-content');
+    const heroVisual = document.querySelector('.hero-visual');
+    
+    if (heroContent) {
+        heroContent.style.animation = 'fadeInLeft 1s ease-out';
+    }
+    
+    if (heroVisual) {
+        heroVisual.style.animation = 'fadeInRight 1s ease-out 0.3s both';
+    }
+    
+    // Add typing effect to hero title
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) {
+        const text = heroTitle.innerHTML;
+        heroTitle.innerHTML = '';
+        heroTitle.style.borderRight = '2px solid #1e3a8a';
+        
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                heroTitle.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            } else {
+                heroTitle.style.borderRight = 'none';
+            }
+        };
+        
+        setTimeout(typeWriter, 1000);
+    }
+    
+    // Create floating particles
+    createParticles();
 });
 
-// Add CSS for active navigation link
+// Particle system
+function createParticles() {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    
+    const particleCount = 50;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.cssText = `
+            position: absolute;
+            width: ${Math.random() * 4 + 1}px;
+            height: ${Math.random() * 4 + 1}px;
+            background: rgba(30, 58, 138, ${Math.random() * 0.5 + 0.1});
+            border-radius: 50%;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            pointer-events: none;
+            animation: float ${Math.random() * 20 + 10}s infinite linear;
+        `;
+        
+        hero.appendChild(particle);
+    }
+}
+
+// Mouse interaction effects
+document.addEventListener('mousemove', (e) => {
+    const cursor = document.querySelector('.cursor') || createCursor();
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+});
+
+function createCursor() {
+    const cursor = document.createElement('div');
+    cursor.className = 'cursor';
+    cursor.style.cssText = `
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        background: radial-gradient(circle, rgba(30, 58, 138, 0.3), transparent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.1s ease;
+    `;
+    document.body.appendChild(cursor);
+    return cursor;
+}
+
+// Enhanced button interactions
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+        btn.style.transform = 'translateY(-3px) scale(1.05)';
+    });
+    
+    btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translateY(0) scale(1)';
+    });
+});
+
+// Add ripple effect to buttons
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            left: ${x}px;
+            top: ${y}px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s ease-out;
+            pointer-events: none;
+        `;
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+    });
+});
+
+// Add enhanced CSS for animations and effects
 const style = document.createElement('style');
 style.textContent = `
     .nav-link.active {
-        color: #667eea;
+        color: #1e3a8a;
     }
     
     .nav-link.active::after {
@@ -290,6 +433,71 @@ style.textContent = `
     body {
         opacity: 0;
         transition: opacity 0.3s ease;
+    }
+    
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+    
+    .particle {
+        animation-name: particle-float;
+    }
+    
+    @keyframes particle-float {
+        0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-100vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+    
+    .hero-title {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    
+    .hero-title.typing {
+        border-right: 2px solid #1e3a8a;
+        animation: blink 1s infinite;
+    }
+    
+    @keyframes blink {
+        0%, 50% { border-color: #1e3a8a; }
+        51%, 100% { border-color: transparent; }
+    }
+    
+    .cursor {
+        mix-blend-mode: difference;
+    }
+    
+    /* Enhanced hover effects for cards */
+    .project-card:hover .project-image {
+        transform: scale(1.05);
+    }
+    
+    .team-card:hover .team-image i {
+        animation: bounce 1s ease;
+    }
+    
+    .growth-card:hover .growth-icon {
+        animation: pulse 2s infinite;
+    }
+    
+    /* Smooth transitions for all interactive elements */
+    * {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 `;
 document.head.appendChild(style);
