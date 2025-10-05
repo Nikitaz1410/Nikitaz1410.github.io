@@ -1357,6 +1357,22 @@ p {
     color: white;
 }
 
+.made-with-love {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    font-style: italic;
+}
+
+.made-with-love i {
+    color: #dc2626;
+    margin: 0 0.2rem;
+}
+
+.made-with-love .fa-beer {
+    color: #fbbf24;
+}
+
 /* Enhanced Mobile Responsive Design */
 
 /* Tablet breakpoint */
