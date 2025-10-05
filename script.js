@@ -433,8 +433,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Remove cursor on mobile devices after clicks (improved detection)
+    // Enhanced mobile device detection
     const isMobileDevice = ('ontouchstart' in window || navigator.maxTouchPoints > 0) && window.innerWidth <= 768;
+    const isTabletDevice = window.innerWidth > 768 && window.innerWidth <= 1024;
     
     if (isMobileDevice) {
         document.addEventListener('touchstart', () => {
@@ -466,8 +467,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Cursor interactions with different elements (desktop only)
-    if (cursor && cursorFollower) {
+    // Cursor interactions with different elements (desktop and tablet only)
+    if (cursor && cursorFollower && !isMobileDevice) {
         const interactiveElements = document.querySelectorAll('a, button, .btn, .project-card, .team-card, .growth-card, .floating-card');
         
         interactiveElements.forEach(element => {
@@ -489,8 +490,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Special hover for logo (desktop only)
-    if (cursor) {
+    // Special hover for logo (desktop and tablet only)
+    if (cursor && !isMobileDevice) {
         const logos = document.querySelectorAll('.logo-img, .hero-logo-img, .about-logo, .mission-logo-img');
         logos.forEach(logo => {
             logo.addEventListener('mouseenter', () => {
@@ -537,8 +538,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Magnetic effect for buttons (desktop only)
-    if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
+    // Magnetic effect for buttons (desktop and tablet only)
+    if (!isMobileDevice) {
         const magneticElements = document.querySelectorAll('.btn, .logo-img, .hero-logo-img');
         magneticElements.forEach(element => {
             element.addEventListener('mousemove', (e) => {
@@ -564,7 +565,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         // Cursor trail effect (desktop only)
-        createCursorTrail();
+        if (!isMobileDevice) {
+            createCursorTrail();
+        }
     }
     
     // Periodic cursor visibility check
@@ -574,6 +577,42 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', () => {
         setTimeout(ensureCursorVisibility, 100);
     });
+    
+    // Mobile-specific enhancements
+    if (isMobileDevice) {
+        // Improve touch interactions for mobile
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.95)';
+            });
+            
+            btn.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (navMenu && hamburger && 
+                !navMenu.contains(e.target) && 
+                !hamburger.contains(e.target) &&
+                navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+        
+        // Prevent zoom on double tap for buttons
+        document.querySelectorAll('a, button, .btn').forEach(element => {
+            element.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                this.click();
+            });
+        });
+    }
 });
 
 // Ripple effect function with coordinate validation
