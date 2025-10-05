@@ -602,6 +602,7 @@ style.textContent = `
         left: 50%;
         transform: translate(-50%, -50%);
         transition: all 0.3s ease;
+        transform-origin: center center;
     }
     
     .cursor-follower {
@@ -622,6 +623,7 @@ style.textContent = `
         height: 50px;
         border-color: rgba(220, 38, 38, 0.6);
         border-width: 3px;
+        transform: translate(-50%, -50%);
     }
     
     .cursor-hover .cursor-dot {
@@ -632,6 +634,7 @@ style.textContent = `
         width: 60px;
         height: 60px;
         background: radial-gradient(circle, rgba(220, 38, 38, 0.2), transparent);
+        transform: translate(-50%, -50%);
     }
     
     /* Logo hover effect */
@@ -641,6 +644,7 @@ style.textContent = `
         border-color: rgba(8, 145, 178, 0.8);
         border-width: 4px;
         animation: rotate 2s linear infinite;
+        transform: translate(-50%, -50%);
     }
     
     .cursor-logo-hover .cursor-dot {
@@ -654,6 +658,8 @@ style.textContent = `
         width: 60px;
         height: 60px;
         animation: pulse 0.15s ease;
+        transform: translate(-50%, -50%);
+        transform-origin: center center;
     }
     
     .cursor-follower-click {
@@ -661,6 +667,14 @@ style.textContent = `
         height: 80px;
         background: radial-gradient(circle, rgba(30, 58, 138, 0.3), transparent);
         animation: expand 0.15s ease;
+        transform: translate(-50%, -50%);
+        transform-origin: center center;
+    }
+    
+    @keyframes pulse {
+        0% { transform: translate(-50%, -50%) scale(1); }
+        50% { transform: translate(-50%, -50%) scale(1.1); }
+        100% { transform: translate(-50%, -50%) scale(1); }
     }
     
     @keyframes expand {
