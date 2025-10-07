@@ -1066,7 +1066,6 @@ p {
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     overflow: hidden;
-    cursor: pointer;
 }
 
 .team-card::before {
@@ -1080,8 +1079,6 @@ p {
     transform: rotate(45deg);
     transition: all 0.6s ease;
     opacity: 0;
-    cursor: pointer;
-    pointer-events: none;
 }
 
 .team-card:hover::before {

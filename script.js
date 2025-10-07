@@ -391,8 +391,11 @@ function animateFollower() {
     }
 }
 
-// Ensure cursor visibility function
+// Ensure cursor visibility function - guarantee cursor never disappears
 function ensureCursorVisibility() {
+    // Always ensure default cursor is visible
+    document.body.style.cursor = 'auto';
+    
     if (!cursor || !cursorFollower) return;
     
     // Check if we're on desktop
@@ -415,9 +418,26 @@ function ensureCursorVisibility() {
     }
 }
 
-// Initialize cursor (desktop only)
+// Global cursor visibility enforcement
+function enforceCursorVisibility() {
+    // Force cursor to be visible on all elements
+    document.body.style.cursor = 'auto';
+    
+    // Ensure no element hides the cursor
+    const allElements = document.querySelectorAll('*');
+    allElements.forEach(element => {
+        if (element.style.cursor === 'none') {
+            element.style.cursor = 'auto';
+        }
+    });
+}
+
+// Initialize cursor (desktop only) - but ensure default cursor is always visible
 document.addEventListener('DOMContentLoaded', () => {
-    // Only create custom cursor on non-touch devices
+    // Always ensure default cursor is visible
+    document.body.style.cursor = 'auto';
+    
+    // Only create custom cursor on non-touch devices as enhancement
     if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
         createCursor();
         
@@ -438,26 +458,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const isTabletDevice = window.innerWidth > 768 && window.innerWidth <= 1024;
     
     if (isMobileDevice) {
+        // On mobile, ensure default cursor behavior
+        document.body.style.cursor = 'auto';
         document.addEventListener('touchstart', () => {
-            if (cursor) {
-                cursor.style.display = 'none';
-            }
-            if (cursorFollower) {
-                cursorFollower.style.display = 'none';
-            }
+            // Keep default cursor visible on mobile
+            document.body.style.cursor = 'auto';
         });
         
         document.addEventListener('click', () => {
-            if (cursor) {
-                cursor.style.display = 'none';
-            }
-            if (cursorFollower) {
-                cursorFollower.style.display = 'none';
-            }
+            // Keep default cursor visible on mobile
+            document.body.style.cursor = 'auto';
         });
     } else {
-        // Ensure cursor stays visible on desktop
+        // On desktop, ensure both default and custom cursor are visible
+        document.body.style.cursor = 'auto';
         document.addEventListener('click', () => {
+            // Ensure default cursor stays visible
+            document.body.style.cursor = 'auto';
             if (cursor && cursor.style.display === 'none') {
                 cursor.style.display = 'block';
             }
@@ -573,9 +590,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Periodic cursor visibility check
     setInterval(ensureCursorVisibility, 1000);
     
+    // Periodic global cursor enforcement
+    setInterval(enforceCursorVisibility, 500);
+    
     // Ensure cursor visibility on window resize
     window.addEventListener('resize', () => {
-        setTimeout(ensureCursorVisibility, 100);
+        setTimeout(() => {
+            ensureCursorVisibility();
+            enforceCursorVisibility();
+        }, 100);
+    });
+    
+    // Ensure cursor visibility on any mouse movement
+    document.addEventListener('mousemove', () => {
+        enforceCursorVisibility();
+    });
+    
+    // Ensure cursor visibility on any click
+    document.addEventListener('click', () => {
+        enforceCursorVisibility();
     });
     
     // Mobile-specific enhancements
@@ -902,12 +935,36 @@ style.textContent = `
         100% { transform: translate3d(-50%, -50%, 0) scale(1.5); }
     }
     
-    /* Hide default cursor on interactive elements (desktop only) */
-    @media (hover: hover) and (pointer: fine) {
-        a, button, .btn, .project-card, .team-card, .growth-card, .floating-card, 
-        .logo-img, .hero-logo-img, .about-logo, .mission-logo-img {
-            cursor: none;
-        }
+    /* CRITICAL: Ensure cursor is ALWAYS visible - never hide it anywhere */
+    *, *::before, *::after {
+        cursor: auto !important;
+    }
+    
+    /* Override any cursor: none rules that might exist */
+    body, html {
+        cursor: auto !important;
+    }
+    
+    /* Specific cursor types for interactive elements */
+    a, button, .btn {
+        cursor: pointer !important;
+    }
+    
+    input, textarea, select {
+        cursor: text !important;
+    }
+    
+    .project-card, .growth-card, .floating-card, .team-card {
+        cursor: pointer !important;
+    }
+    
+    .logo-img, .hero-logo-img, .about-logo, .mission-logo-img {
+        cursor: pointer !important;
+    }
+    
+    /* Force cursor visibility on all hover states */
+    *:hover {
+        cursor: inherit !important;
     }
     
     /* Smooth cursor transitions */
