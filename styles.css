@@ -1313,6 +1313,32 @@ p {
     object-fit: cover;
     object-position: center;
     display: block;
+    transition: transform 0.3s ease;
+}
+
+/* Responsive images for mobile */
+@media (max-width: 768px) {
+    .project-image img,
+    .team-photo,
+    .journey-image,
+    .about-logo-huge {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .project-image {
+        height: 180px; /* Slightly smaller on mobile */
+    }
+    
+    .team-photo {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .journey-image {
+        max-width: 100%;
+        height: auto;
+    }
 }
 
 .project-content {
@@ -1776,8 +1802,58 @@ p {
 
 /* Enhanced Mobile Responsive Design */
 
+/* Large tablet breakpoint */
+@media (max-width: 1024px) and (min-width: 901px) {
+    .container {
+        padding: 0 30px;
+    }
+    
+    .hero-container {
+        gap: 3rem;
+    }
+    
+    .hero-title {
+        font-size: 2.8rem;
+    }
+    
+    .hero-description {
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+    
+    .projects-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+    
+    .team-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .growth-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+    
+    .contact-content {
+        gap: 3rem;
+    }
+    
+    .about-content {
+        gap: 3rem;
+    }
+    
+    .recruitment-content,
+    .partners-content,
+    .sponsors-content {
+        gap: 3rem;
+    }
+}
+
 /* Tablet breakpoint */
-@media (max-width: 1024px) and (min-width: 769px) {
+@media (max-width: 900px) and (min-width: 769px) {
     .container {
         padding: 0 30px;
     }
@@ -1831,21 +1907,36 @@ p {
     .application-banner {
         padding: 0.6rem 0;
         min-height: 60px; /* Smaller height on mobile */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1001;
     }
     
     .banner-content {
         padding: 0 15px;
-        flex-wrap: wrap;
+        flex-direction: column;
         gap: 0.5rem;
-        min-height: 60px; /* Match mobile banner height */
+        min-height: 60px;
+        text-align: center;
+    }
+    
+    .banner-text {
+        order: 1;
     }
     
     .banner-text strong {
         font-size: 1rem;
+        display: block;
     }
     
     .banner-text span {
         font-size: 0.8rem;
+    }
+    
+    .banner-action {
+        order: 2;
     }
     
     .banner-action .btn-banner {
@@ -1853,8 +1944,15 @@ p {
         font-size: 0.9rem;
     }
     
+    .banner-close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+    }
+    
     .hamburger {
         display: flex;
+        z-index: 1002;
     }
     
     .nav-menu {
@@ -1862,7 +1960,8 @@ p {
         left: -100%;
         top: 120px; /* Adjusted for mobile banner (60px) + navbar (60px) */
         flex-direction: column;
-        background-color: white;
+        background-color: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
         width: 100%;
         text-align: center;
         transition: 0.3s ease;
@@ -1870,6 +1969,8 @@ p {
         padding: 2rem 0;
         z-index: 1001;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
     }
     
     .nav-menu.active {
@@ -1924,12 +2025,17 @@ p {
         padding-top: 30px;
         min-height: calc(100vh - 150px);
         padding-bottom: 25px;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
     }
     
     .hero-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
         line-height: 1.2;
         margin-bottom: 1.5rem;
+        word-wrap: break-word;
+        hyphens: auto;
     }
     
     .hero-description {
@@ -1939,6 +2045,7 @@ p {
         max-width: 500px;
         margin-left: auto;
         margin-right: auto;
+        padding: 0 10px;
     }
     
     .hero-application-notice {
@@ -1971,6 +2078,12 @@ p {
         padding: 16px 24px;
         font-size: 1rem;
         border-radius: 30px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .about-content {
@@ -2011,12 +2124,15 @@ p {
     }
     
     .team-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1.5rem;
+        justify-items: center;
     }
     
     .team-card {
         padding: 1.5rem;
+        max-width: 280px;
+        width: 100%;
     }
     
     .contact-content {
@@ -2205,6 +2321,10 @@ p {
         width: 100%;
         transition: border-color 0.3s ease;
         min-height: 50px; /* Better touch target */
+        -webkit-appearance: none;
+        appearance: none;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
     }
     
 .form-group input:focus,
@@ -2223,6 +2343,24 @@ p {
 
 /* Small mobile devices */
 @media (max-width: 480px) {
+    .application-banner {
+        min-height: 80px;
+        padding: 0.8rem 0;
+    }
+    
+    .banner-content {
+        min-height: 80px;
+        padding: 0 10px;
+    }
+    
+    .navbar {
+        top: 80px;
+        padding: 0.6rem 0;
+    }
+    
+    .nav-menu {
+        top: 140px; /* Adjusted for mobile banner (80px) + navbar (60px) */
+    }
     .container {
         padding: 0 15px;
     }
@@ -2311,12 +2449,13 @@ p {
     }
     
     .hero {
-        padding: 70px 0 3rem 0;
-        min-height: calc(100vh - 70px);
+        padding: 140px 0 3rem 0;
+        min-height: calc(100vh - 140px);
     }
     
     .hero-container {
         min-height: calc(100vh - 140px);
+        padding: 0 15px;
     }
     
     .hero-content {
@@ -2498,5 +2637,60 @@ p {
     .journey-image-container {
         padding: 1rem;
         border-radius: 15px;
+    }
+}
+
+/* Mobile Performance Optimizations */
+@media (max-width: 768px) {
+    /* Improve scrolling performance */
+    * {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Optimize animations for mobile */
+    .floating-card,
+    .project-card,
+    .team-card,
+    .growth-card {
+        will-change: transform;
+        transform: translateZ(0);
+    }
+    
+    /* Reduce motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+        .floating-card {
+            animation: none;
+        }
+        
+        .hero-visual {
+            animation: none;
+        }
+        
+        * {
+            transition: none !important;
+            animation: none !important;
+        }
+    }
+    
+    /* Improve touch targets */
+    .nav-link,
+    .btn,
+    .team-linkedin,
+    .footer-social a {
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Better focus indicators for accessibility */
+    .btn:focus,
+    .nav-link:focus,
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: 3px solid #0A2D57;
+        outline-offset: 2px;
     }
 }

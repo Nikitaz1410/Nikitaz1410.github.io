@@ -16,20 +16,48 @@ function closeBanner() {
     }
 }
 
-// Mobile Navigation Toggle
+// Enhanced Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        
+        // Prevent body scroll when menu is open
+        if (navMenu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    });
 
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
-}));
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }));
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    // Close mobile menu on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+}
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -657,25 +685,32 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.btn').forEach(btn => {
             btn.addEventListener('touchstart', function() {
                 this.style.transform = 'scale(0.95)';
+                this.style.transition = 'transform 0.1s ease';
             });
             
             btn.addEventListener('touchend', function() {
                 this.style.transform = 'scale(1)';
             });
+            
+            btn.addEventListener('touchcancel', function() {
+                this.style.transform = 'scale(1)';
+            });
         });
         
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const navMenu = document.querySelector('.nav-menu');
-            const hamburger = document.querySelector('.hamburger');
+        // Add touch feedback to cards
+        document.querySelectorAll('.project-card, .team-card, .growth-card').forEach(card => {
+            card.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+                this.style.transition = 'transform 0.1s ease';
+            });
             
-            if (navMenu && hamburger && 
-                !navMenu.contains(e.target) && 
-                !hamburger.contains(e.target) &&
-                navMenu.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            }
+            card.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
+            
+            card.addEventListener('touchcancel', function() {
+                this.style.transform = 'scale(1)';
+            });
         });
         
         // Prevent zoom on double tap for buttons
@@ -683,6 +718,16 @@ document.addEventListener('DOMContentLoaded', () => {
             element.addEventListener('touchend', function(e) {
                 e.preventDefault();
                 this.click();
+            });
+        });
+        
+        // Improve form interactions on mobile
+        document.querySelectorAll('input, textarea, select').forEach(input => {
+            input.addEventListener('focus', function() {
+                // Scroll to input on focus for better UX
+                setTimeout(() => {
+                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
             });
         });
     }
