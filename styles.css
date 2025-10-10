@@ -11,11 +11,11 @@
     top: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ff6b6b 100%);
+    background: linear-gradient(135deg, #0A2D57 0%, #4A98FF 50%, #4BFFC0 100%);
     color: white;
     z-index: 1001;
     padding: 0.8rem 0;
-    box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 4px 20px rgba(10, 45, 87, 0.3);
     animation: bannerPulse 3s ease-in-out infinite;
     min-height: 70px; /* Ensure consistent height */
 }
@@ -58,7 +58,7 @@
 
 .banner-action .btn-banner {
     background: white;
-    color: #ff6b6b;
+    color: #0A2D57;
     font-weight: 600;
     padding: 0.6rem 1.5rem;
     border-radius: 25px;
@@ -93,10 +93,10 @@
 
 @keyframes bannerPulse {
     0%, 100% {
-        box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+        box-shadow: 0 4px 20px rgba(10, 45, 87, 0.3);
     }
     50% {
-        box-shadow: 0 6px 25px rgba(255, 107, 107, 0.5);
+        box-shadow: 0 6px 25px rgba(10, 45, 87, 0.5);
     }
 }
 
@@ -569,7 +569,7 @@ p {
 }
 
 .application-notice-content {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ff6b6b 100%);
+    background: linear-gradient(135deg, #0A2D57 0%, #4A98FF 50%, #4BFFC0 100%);
     color: white;
     padding: 1rem 2rem;
     border-radius: 50px;
@@ -578,9 +578,9 @@ p {
     gap: 0.8rem;
     font-weight: 600;
     font-size: 1.1rem;
-    box-shadow: 0 5px 20px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 5px 20px rgba(10, 45, 87, 0.3);
     animation: heroNoticePulse 3s ease-in-out infinite;
-    border: 2px solid #ff4757;
+    border: 2px solid #0A2D57;
 }
 
 .application-notice-content i {
@@ -596,12 +596,12 @@ p {
 
 @keyframes heroNoticePulse {
     0%, 100% {
-        box-shadow: 0 5px 20px rgba(255, 107, 107, 0.3);
-        border-color: #ff4757;
+        box-shadow: 0 5px 20px rgba(10, 45, 87, 0.3);
+        border-color: #0A2D57;
     }
     50% {
-        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
-        border-color: #ff6b7a;
+        box-shadow: 0 8px 25px rgba(10, 45, 87, 0.5);
+        border-color: #4A98FF;
     }
 }
 
