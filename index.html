@@ -10,11 +10,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Application Deadline Banner -->
+    <div class="application-banner">
+        <div class="banner-content">
+            <div class="banner-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="banner-text">
+                <strong>Applications are NOW OPEN!</strong>
+                <span>Apply by October 31st, 2025 to join our first cohort</span>
+            </div>
+            <div class="banner-action">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPu7rlfzLuNck-H5QDlaUYPnJ67cEdL7M3A7S6etuSA1enzw/viewform?pli=1" class="btn btn-banner">Apply Now</a>
+            </div>
+            <button class="banner-close" onclick="closeBanner()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="Logo.png" alt="TUM SociAI Logo" class="logo-img">
+                <img src="pictures/SociAI.png" alt="TUM SociAI Logo" class="logo-img">
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -60,9 +79,6 @@
     <section id="home" class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <div class="hero-logo">
-                    <img src="Logo.png" alt="TUM SociAI Logo" class="hero-logo-img">
-                </div>
                 <h1 class="hero-title">
                     <span class="gradient-text">AI for Social Good</span>
                     <br>Europe's First Student Initiative
@@ -73,9 +89,15 @@
                     TUM SociAl combines cutting-edge AI innovation with social and environmental good, 
                     powered by an entrepreneurial spirit.
                 </p>
+                <div class="hero-application-notice">
+                    <div class="application-notice-content">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Applications open until <strong>October 31st, 2025</strong></span>
+                    </div>
+                </div>
                 <div class="hero-buttons">
                     <a href="#about" class="btn btn-primary">Learn More</a>
-                    <a href="#contact" class="btn btn-secondary">Join Us</a>
+                    <a href="#recruitment" class="btn btn-urgent">Apply Now</a>
                 </div>
             </div>
             <div class="hero-visual">
@@ -90,6 +112,10 @@
                 <div class="floating-card card-3">
                     <i class="fas fa-users"></i>
                     <span>Community</span>
+                </div>
+                <div class="floating-card card-4">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Entrepreneurship</span>
                 </div>
             </div>
         </div>
@@ -119,22 +145,22 @@
                     </p>
                     <div class="stats">
                         <div class="stat">
-                            <span class="stat-number">30+</span>
+                            <span class="stat-number">25+</span>
                             <span class="stat-label">First Cohort</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number">5+</span>
+                            <span class="stat-number">6+</span>
                             <span class="stat-label">NGO Partners</span>
                         </div>
                         <div class="stat">
-                            <span class="stat-number">3+</span>
-                            <span class="stat-label">Active Projects</span>
+                            <span class="stat-number" id="days-counter"></span>
+                            <span class="stat-label">Days since founding</span>
                         </div>
                     </div>
                 </div>
                 <div class="about-image animate-on-scroll animate-delay-2">
                     <div class="image-placeholder logo-only">
-                        <img src="Logo.png" alt="TUM SociAI Logo" class="about-logo-huge">
+                        <img src="pictures/Logo.png" alt="TUM SociAI Logo" class="about-logo-huge">
                     </div>
                 </div>
             </div>
@@ -146,7 +172,7 @@
         <div class="container">
             <div class="section-header">
                 <div class="mission-logo">
-                    <img src="Logo.png" alt="TUM SociAI Logo" class="mission-logo-img">
+                    <img src="pictures/SociAI_Logo.png" alt="TUM SociAI Logo" class="mission-logo-img">
                 </div>
                 <h2>Our Mission & Vision</h2>
                 <p>Creating meaningful change through technology</p>
@@ -173,7 +199,7 @@
             <div class="projects-grid">
                 <div class="project-card animate-on-scroll animate-delay-1">
                     <div class="project-image">
-                        <i class="fas fa-chart-line"></i>
+                        <img src="pictures/Environment.jpg" alt="Environment project image">
                     </div>
                     <div class="project-content">
                         <h3>Disaster Prediction AI – Protecting the Planet</h3>
@@ -187,7 +213,7 @@
                 </div>
                 <div class="project-card animate-on-scroll animate-delay-2">
                     <div class="project-image">
-                        <i class="fas fa-comments"></i>
+                        <img src="pictures/NGOs.png" alt="NGO project image">
                     </div>
                     <div class="project-content">
                         <h3>AI-Toolkit for PR - Empowering NGOs</h3>
@@ -201,7 +227,7 @@
                 </div>
                 <div class="project-card animate-on-scroll animate-delay-3">
                     <div class="project-image">
-                        <i class="fas fa-graduation-cap"></i>
+                        <img src="pictures/Education.jpeg" alt="Education project image">
                     </div>
                     <div class="project-content">
                         <h3>AI Education Tools – Equalizing Opportunity</h3>
@@ -268,67 +294,81 @@
             <div class="team-grid">
                 <div class="team-card animate-on-scroll animate-delay-3">
                     <div class="team-image">
-                        <img src="Leon.jpg" alt="Leon Körbs" class="team-photo">
+                        <img src="pictures/Leon.jpg" alt="Leon Körbs" class="team-photo">
                     </div>
                     <h3>Leon Körbs</h3>
-                    <p>BS in Technology & Management (TUM)</p>
+                    <p>MS in Technology & Management (TUM)</p>
+                    <a class="team-linkedin" href="https://www.linkedin.com/in/leon-koerbs/" target="_blank" rel="noopener noreferrer"><img src="pictures/LinkedIN.png" alt="LinkedIn"></a>
                 </div>
                 <div class="team-card animate-on-scroll animate-delay-3">
                     <div class="team-image">
-                        <a href="https://www.linkedin.com/in/nikitazubairov/" target="_blank" rel="noopener noreferrer">
-                            <img src="Nikita.jpg" alt="Nikita Zubairov" class="team-photo">
-                        </a>
+                        <img src="pictures/Nikita.jpg" alt="Nikita Zubairov" class="team-photo">
                     </div>
                     <h3>Nikita Zubairov</h3>
                     <p>BS in Information Systems (TUM & ETH Zurich)</p>
-                    <p class="team-bio">AI engineer & entrepreneur passionate about using technology for social impact. 
-                    Founder of <a href="https://mydoorbell.app" target="_blank">MyDoorbell</a> (10,000+ users worldwide) 
-                    and researcher in machine learning for digital health at TUM and ETH Zurich.</p>
+                    <a class="team-linkedin" href="https://www.linkedin.com/in/nikitazubairov/" target="_blank" rel="noopener noreferrer"><img src="pictures/LinkedIN.png" alt="LinkedIn"></a>
                 </div>
                 <div class="team-card animate-on-scroll animate-delay-1">
                     <div class="team-image">
-                        <img src="Nico.png" alt="Nicolas Paul" class="team-photo">
+                        <img src="pictures/Nico.png" alt="Nicolas Paul" class="team-photo">
                     </div>
                     <h3>Nicolas Paul</h3>
                     <p>BS in Technology & Management (TUM)</p>
-                    <p class="team-bio">Passionate about turning deep-tech innovation into scalable impact, bringing together the right people and partners to make it happen. Background in Start-Up Incubation at UnternehmerTUM, Revenue Architecture design, and Business Development at Climate-Tech and Prop-Tech Start-Ups. Research on AI & Robotics as visiting student at in Japan.</p>
-                </div>
-                <div class="team-card animate-on-scroll animate-delay-2">
-                    <div class="team-image">
-                        <img src="Ivan.JPG" alt="Ivan von Greiff" class="team-photo">
-                    </div>
-                    <h3>Ivan von Greiff</h3>
-                    <p>MS Computer Science (TUM)</p>
+                    <a class="team-linkedin" href="https://www.linkedin.com/in/nicolas-erik-paul/" target="_blank" rel="noopener noreferrer"><img src="pictures/LinkedIN.png" alt="LinkedIn"></a>
                 </div>
                 <div class="team-card animate-on-scroll animate-delay-1">
                     <div class="team-image">
-                        <img src="Ines.jpeg" alt="Inés Suárez" class="team-photo">
+                        <img src="pictures/Ines.jpeg" alt="Inés Suárez" class="team-photo">
                     </div>
                     <h3>Inés Suárez</h3>
                     <p>MS in in Aerospace (TUM)</p>
-                    <p class="team-bio">Engineer passionate about applying technical depth to real-world challenges. Experienced in Machine Learning research at TUM. Driven by a timeless commitment to volunteering and helping people.</p>
+                    <a class="team-linkedin" href="https://www.linkedin.com/in/in%C3%A9s-su%C3%A1rez-garc%C3%ADa/" target="_blank" rel="noopener noreferrer"><img src="pictures/LinkedIN.png" alt="LinkedIn"></a>
+                </div>
+                <div class="team-card animate-on-scroll animate-delay-2">
+                    <div class="team-image">
+                        <img src="pictures/Ivan.JPG" alt="Ivan von Greiff" class="team-photo">
+                    </div>
+                    <h3>Ivan von Greiff</h3>
+                    <p>MS Computer Science (TUM)</p>
+                    <a class="team-linkedin" href="https://www.linkedin.com/in/ivan-v-703006b1/" target="_blank" rel="noopener noreferrer"><img src="pictures/LinkedIN.png" alt="LinkedIn"></a>
                 </div>
                 <div class="team-card animate-on-scroll animate-delay-4">
                     <div class="team-image">
-                        <img src="Till.jpg" alt="Till Sander" class="team-photo">
+                        <img src="pictures/Till.jpg" alt="Till Sander" class="team-photo">
                     </div>
                     <h3>Till Sander</h3>
                     <p>BS in Technology & Management (TUM)</p>
+                    <a class="team-linkedin" href="https://www.linkedin.com/in/till-sander123/" target="_blank" rel="noopener noreferrer"><img src="pictures/LinkedIN.png" alt="LinkedIn"></a>
                 </div>
                 <div class="team-card animate-on-scroll animate-delay-2">
                     <div class="team-image">
-                        <img src="Sha.jpeg" alt="Sha Kansal" class="team-photo">
+                        <img src="pictures/Sha.jpeg" alt="Sha Kansal" class="team-photo">
                     </div>
                     <h3>Sha Kansal</h3>
                     <p>MS in Electrical & Information Engineering (TUM)</p>
+                    <a class="team-linkedin" href="https://www.linkedin.com/in/shaurya-kansal-leader-technocrat/" target="_blank" rel="noopener noreferrer"><img src="pictures/LinkedIN.png" alt="LinkedIn"></a>
                 </div>
                 <div class="team-card animate-on-scroll animate-delay-2">
                     <div class="team-image">
-                        <img src="Jaron.jpeg" alt="Jaron Schurer" class="team-photo">
+                        <img src="pictures/Jaron.jpeg" alt="Jaron Schurer" class="team-photo">
                     </div>
                     <h3>Jaron Schurer</h3>
                     <p>MS in Technology & Management (TUM)</p>
-                    <p class="team-bio"> Experience in Startups, Consulting, AI, and Innovation.</p>
+                    <a class="team-linkedin" href="https://www.linkedin.com/in/jaron-schurer/" target="_blank" rel="noopener noreferrer"><img src="pictures/LinkedIN.png" alt="LinkedIn"></a>
+                </div>
+                <div class="team-card animate-on-scroll animate-delay-2">
+                    <div class="team-image">
+                        <img src="pictures/Jin.jpeg" alt="Jin Lee" class="team-photo">
+                    </div>
+                    <h3>Jin Lee</h3>
+                    <a class="team-linkedin" href="https://www.linkedin.com/in/jinkyeonglee/" target="_blank" rel="noopener noreferrer"><img src="pictures/LinkedIN.png" alt="LinkedIn"></a>
+                </div>
+                <div class="team-card animate-on-scroll animate-delay-2">
+                    <div class="team-image">
+                        <img src="pictures/Andres.jpeg" alt="Andrés Forero" class="team-photo">
+                    </div>
+                    <h3>Andrés Forero</h3>
+                    <a class="team-linkedin" href="https://www.linkedin.com/in/andres-forero97/" target="_blank" rel="noopener noreferrer"><img src="pictures/LinkedIN.png" alt="LinkedIn"></a>
                 </div>                  
             </div>
         </div>
@@ -341,6 +381,37 @@
                 <h2>Who We're Looking For & How to Join</h2>
                 <p>TUM SociAl is searching for passionate students who want to make a difference with AI</p>
             </div>
+            
+            <!-- Application Deadline Alert -->
+            <div class="deadline-alert">
+                <div class="deadline-content">
+                    <div class="deadline-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="deadline-text">
+                        <h3>Apply now!</h3>
+                        <p><strong>Applications close on October 31st, 2025</strong> - Don't miss your chance to be part of Europe's first AI for social good student initiative!</p>
+                        <div class="deadline-countdown">
+                            <span class="countdown-text">Hurry up - spots are filling fast!</span>
+                        </div>
+                    </div>
+                    <div class="deadline-action">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPu7rlfzLuNck-H5QDlaUYPnJ67cEdL7M3A7S6etuSA1enzw/viewform?pli=1" class="btn btn-deadline">Apply Before Oct 31st</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journey Picture Section -->
+            <div class="journey-section">
+                <div class="journey-content">
+                    <h3>Your Journey</h3>
+                    <p>Discover how you can join TUM SociAI and make a difference</p>
+                    <div class="journey-image-container">
+                        <img src="pictures/Journey.png" alt="TUM SociAI Journey" class="journey-image">
+                    </div>
+                </div>
+            </div>
+            
             <div class="recruitment-content">
                 <div class="recruitment-text">
                     <p>We welcome undergraduate and graduate students from <strong>TUM, LMU, and Hochschule München</strong> with diverse backgrounds. While we are particularly interested in <strong>AI engineers and programmers</strong> (Computer Science, Informatics, Data Science, Electrical Engineering, Physics, or any related field and you can code or build AI models), we equally value students with skills in <strong>marketing, design, finance, and business</strong> who are passionate about using technology for social good.</p>
@@ -349,7 +420,7 @@
                 <div class="recruitment-cta">
                     <h3>Ready to Join Us?</h3>
                     <p>If you've been looking for a way to push your limits, apply your knowledge, and create genuine change as a student – this is your chance.</p>
-                    <a href="#contact" class="btn btn-primary">Apply Now</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPu7rlfzLuNck-H5QDlaUYPnJ67cEdL7M3A7S6etuSA1enzw/viewform?pli=1" class="btn btn-urgent">Apply Now</a>
                 </div>
             </div>
         </div>
@@ -438,13 +509,6 @@
                             </div>
                         </div>
                         <div class="contact-method">
-                            <i class="fab fa-discord"></i>
-                            <div>
-                                <h4>Discord</h4>
-                                <p>Join our community</p>
-                            </div>
-                        </div>
-                        <div class="contact-method">
                             <i class="fas fa-map-marker-alt"></i>
                             <div>
                                 <h4>Location</h4>
@@ -493,14 +557,12 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <img src="Logo.png" alt="TUM SociAI Logo" class="logo-img">
+                        <img src="pictures/Logo.png" alt="TUM SociAI Logo" class="logo-img">
                     </div>
                     <p>Europe's first student initiative combining AI innovation with social impact</p>
                     <div class="footer-social">
                         <a href="#"><i class="fab fa-linkedin"></i></a>
                         <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 <div class="footer-section">
@@ -521,8 +583,6 @@
                         <li><a href="#ngo-partners">NGO Partners</a></li>
                         <li><a href="#sponsors">Corporate Sponsors</a></li>
                         <li><a href="#recruitment">Student Applications</a></li>
-                        <li><a href="#">Events</a></li>
-                        <li><a href="#">LinkedIn Updates</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -530,11 +590,11 @@
                     <p><i class="fas fa-envelope"></i> contact@tum-social.com</p>
                     <p><i class="fas fa-map-marker-alt"></i> TUM Campus, Munich</p>
                     <p><i class="fas fa-university"></i> Technical University of Munich</p>
-                    <p><i class="fas fa-calendar"></i> Applications until Oct 31st</p>
+                    <p><i class="fas fa-calendar"></i> <strong class="urgent-deadline">Applications until Oct 31st</strong></p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 TUM SociAl - Where AI Meets Social Impact. All rights reserved.</p>
+                <p>&copy; 2025 TUM SociAl - Where AI Meets Social Impact. All rights reserved.</p>
                 <p class="made-with-love">Made with <i class="fas fa-heart"></i> & <i class="fas fa-beer"></i> in Munich</p>
             </div>
         </div>

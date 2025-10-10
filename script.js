@@ -1,3 +1,21 @@
+// Application Banner Close Function
+function closeBanner() {
+    const banner = document.querySelector('.application-banner');
+    const navbar = document.querySelector('.navbar');
+    const hero = document.querySelector('.hero');
+    
+    if (banner) {
+        banner.style.transform = 'translateY(-100%)';
+        banner.style.transition = 'transform 0.5s ease-in-out';
+        
+        setTimeout(() => {
+            banner.style.display = 'none';
+            if (navbar) navbar.classList.add('banner-closed');
+            if (hero) hero.classList.add('banner-closed');
+        }, 500);
+    }
+}
+
 // Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
@@ -210,11 +228,32 @@ document.addEventListener('DOMContentLoaded', () => {
     teamCards.forEach((card, index) => {
         card.style.animationDelay = `${index * 0.1}s`;
     });
+    
+    // Update days counter on page load
+    updateDaysCounter();
 });
+
+// Calculate days since founding date (August 1st, 2025)
+function calculateDaysSinceFounding() {
+    const foundingDate = new Date('2025-08-01');
+    const currentDate = new Date();
+    const timeDifference = currentDate.getTime() - foundingDate.getTime();
+    const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+    return Math.max(0, daysDifference); // Return 0 if founding date is in the future
+}
+
+// Update the days counter element
+function updateDaysCounter() {
+    const daysCounter = document.getElementById('days-counter');
+    if (daysCounter) {
+        const days = calculateDaysSinceFounding();
+        daysCounter.textContent = days;
+    }
+}
 
 // Counter animation for stats
 function animateCounters() {
-    const counters = document.querySelectorAll('.stat-number');
+    const counters = document.querySelectorAll('.stat-number:not(#days-counter)');
     
     counters.forEach(counter => {
         const target = parseInt(counter.textContent.replace('+', ''));
@@ -239,6 +278,7 @@ function animateCounters() {
 const statsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
+            updateDaysCounter();
             animateCounters();
             statsObserver.unobserve(entry.target);
         }
@@ -1033,3 +1073,4 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
