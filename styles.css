@@ -387,13 +387,6 @@ p {
     transition: all 0.3s ease;
 }
 
-/* Mobile navbar positioning - should be below banner */
-@media (max-width: 768px) {
-    .navbar {
-        top: 60px; /* Adjusted for mobile banner height */
-    }
-}
-
 /* When banner is closed, navbar returns to top */
 .navbar.banner-closed {
     top: 0;
