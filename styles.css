@@ -2067,8 +2067,9 @@ p {
     }
     
     .team-card {
-        padding: 1.5rem;
-        max-width: 280px;
+        padding: 1.8rem;
+        padding-bottom: 3.5rem; /* Extra space for LinkedIn icon */
+        max-width: 320px;
         width: 100%;
     }
     
@@ -2343,7 +2344,8 @@ p {
     }
     
     .team-card {
-        padding: 1rem;
+        padding: 1.2rem;
+        padding-bottom: 3.5rem; /* Extra space for LinkedIn icon */
     }
     
     .projects-grid {
