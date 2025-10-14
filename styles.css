@@ -7,7 +7,7 @@
 
 :root {
     --gradient-banner: linear-gradient(90deg, #4A98FF 0%, #4BFFC0 100%);
-    --gradient-brand: linear-gradient(90deg, #4A98FF 0%, #4BFFC0 100%);
+    --gradient-brand: linear-gradient(135deg, #4A98FF 0%, #4BFFC0 100%);
     --gradient-sheen: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     --gradient-sheen-strong: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
     --gradient-hero-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -18,6 +18,7 @@
     --gradient-urgent: linear-gradient(135deg, #4BFFC0 0%, #4A98FF 60%, #0A2D57 100%);
     --gradient-section: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     --gradient-sky: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --journey-line-color: rgba(10, 45, 87, 0.55);
 }
 
 /* Application Deadline Banner */
@@ -1423,12 +1424,16 @@ p {
 .team-card {
     text-align: center;
     background: white;
-    padding: 1.5rem;
+    padding: 1.75rem 1.5rem 1.6rem;
     border-radius: 1rem;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .team-card::before {
@@ -1463,28 +1468,31 @@ p {
     position: relative;
 }
 
-.team-linkedin {
-    position: absolute;
-    left: 50%;
-    bottom: 10px;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
+.team-role {
+    color: #555;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.team-actions {
+    margin-top: auto;
     display: flex;
+    justify-content: center;
+}
+
+.team-linkedin {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
 }
 
 .team-linkedin img {
     width: 100%;
     height: 100%;
     display: block;
-}
-
-.team-linkedin:hover {
-    transform: translateX(-50%) scale(1.06);
 }
 
 .team-image i {
@@ -2345,6 +2353,11 @@ p {
     .team-card {
         padding: 1rem;
     }
+
+    .team-linkedin {
+        width: 20px;
+        height: 20px;
+    }
     
     .projects-grid {
         grid-template-columns: 1fr;
@@ -2478,6 +2491,24 @@ p {
 }
 
 /* Journey Section Styles */
+.journey-flow {
+    position: relative;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 12px 45px rgba(10, 45, 87, 0.12);
+    overflow: hidden;
+}
+
+.journey-flow::before,
+.journey-row-top::after,
+.journey-row-mid::after,
+.journey-row-mid::before,
+.journey-row-bottom::before,
+.journey-row-bottom::after {
+    content: none;
+}
+
 .journey-section {
     margin: 4rem 0;
     padding: 3rem 0;
@@ -2504,53 +2535,192 @@ p {
 }
 
 .journey-content p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #6c757d;
-    margin-bottom: 2.5rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 2.5rem;
+    max-width: 680px;
     line-height: 1.6;
 }
 
-.journey-image-container {
+.journey-row {
+    position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    max-width: 1200px;
+    align-items: stretch;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+}
+
+.journey-row:last-child {
+    margin-bottom: 0;
+}
+
+.journey-row-top {
+    justify-content: center;
+}
+
+.journey-row-mid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    align-items: stretch;
+}
+
+.journey-row-mid .journey-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: none;
     width: 100%;
-    background: white;
-    border-radius: 20px;
+}
+
+.journey-row-bottom {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    align-items: stretch;
+}
+
+.journey-row-bottom .journey-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: none;
+    width: 100%;
+}
+
+.journey-branch {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 2.5rem;
+    flex-wrap: nowrap;
+    margin-bottom: 3.5rem;
+    padding: 0 1rem 4rem;
+    overflow-x: auto;
+}
+
+.journey-branch::-webkit-scrollbar {
+    display: none;
+}
+
+.journey-stack {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    margin-top: 3.5rem;
+}
+
+.journey-card {
+    position: relative;
+    background: #ffffff;
+    border: 2px solid rgba(10, 45, 87, 0.12);
+    border-radius: 18px;
     padding: 2rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    max-width: 420px;
+    flex: 1 1 320px;
+    text-align: left;
+    box-shadow: 0 12px 30px rgba(10, 45, 87, 0.08);
+    z-index: 1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.journey-image-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+.journey-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(10, 45, 87, 0.16);
 }
 
-.journey-image {
-    max-width: 100%;
-    height: auto;
-    width: auto;
-    object-fit: contain;
-    border-radius: 15px;
-    transition: transform 0.3s ease;
+.journey-card h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #13294b;
+    margin-bottom: 0.6rem;
 }
 
-.journey-image:hover {
-    transform: scale(1.02);
+.journey-card p {
+    font-size: 1rem;
+    color: #556174;
+    margin: 0;
+    line-height: 1.55;
+}
+
+.journey-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(10, 45, 87, 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #0A2D57;
+    margin-bottom: 1rem;
+}
+
+.journey-card--intro {
+    max-width: 540px;
+    text-align: center;
+}
+
+.journey-card--intro .journey-icon {
+    margin: 0 auto 1rem;
+    background: rgba(74, 152, 255, 0.18);
+    color: #0A2D57;
+}
+
+.journey-card--track.initiative {
+    border-color: rgba(255, 99, 71, 0.35);
+}
+
+.journey-card--track.initiative .journey-icon {
+    background: rgba(255, 99, 71, 0.15);
+    color: #ff6540;
+}
+
+.journey-card--track.engineering {
+    border-color: rgba(75, 255, 192, 0.35);
+}
+
+.journey-card--track.engineering .journey-icon {
+    background: rgba(75, 255, 192, 0.2);
+    color: #00c894;
+}
+
+.journey-card--event .journey-icon {
+    background: rgba(79, 172, 254, 0.18);
+    color: #2580ff;
+}
+
+.journey-card--mentorship .journey-icon {
+    background: rgba(153, 102, 255, 0.18);
+    color: #7740d9;
+}
+
+.journey-badge {
+    position: absolute;
+    top: -18px;
+    right: 18px;
+    background: #0A2D57;
+    color: #ffffff;
+    font-size: 0.75rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.journey-stack .journey-card {
+    text-align: center;
+    max-width: 520px;
 }
 
 /* Mobile Responsive for Journey Section */
 @media (max-width: 768px) {
     .journey-section {
-        margin: 2rem 0;
+        margin: 2.5rem 0;
         padding: 2rem 0;
-        border-radius: 15px;
     }
     
     .journey-content {
@@ -2561,14 +2731,49 @@ p {
         font-size: 2rem;
     }
     
-    .journey-content p {
-        font-size: 1rem;
-        margin-bottom: 2rem;
+    .journey-flow {
+        padding: 2rem 1.25rem;
     }
     
-    .journey-image-container {
-        padding: 1rem;
-        border-radius: 15px;
+    .journey-flow::before {
+        display: none;
+    }
+    
+    .journey-row {
+        margin-bottom: 2rem;
+        gap: 1.5rem;
+    }
+    
+    .journey-row-top::after,
+    .journey-row-mid::after,
+    .journey-row-mid::before,
+    .journey-row-bottom::before,
+    .journey-row-bottom::after {
+        display: none;
+    }
+    
+    .journey-card {
+        flex: 1 1 100%;
+        text-align: center;
+        padding: 1.75rem;
+    }
+    
+    .journey-card h4 {
+        font-size: 1.1rem;
+    }
+    
+    .journey-card p {
+        font-size: 0.95rem;
+    }
+    
+    .journey-icon {
+        margin: 0 auto 0.75rem;
+    }
+    
+    .journey-badge {
+        position: static;
+        display: inline-block;
+        margin-top: 1rem;
     }
 }
 
