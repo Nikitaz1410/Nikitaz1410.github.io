@@ -387,6 +387,13 @@ p {
     transition: all 0.3s ease;
 }
 
+/* Mobile navbar positioning - should be below banner */
+@media (max-width: 768px) {
+    .navbar {
+        top: 60px; /* Adjusted for mobile banner height */
+    }
+}
+
 /* When banner is closed, navbar returns to top */
 .navbar.banner-closed {
     top: 0;
@@ -2030,12 +2037,12 @@ p {
         gap: 2rem;
         padding: 0 20px;
         align-items: center;
-        min-height: calc(100vh - 150px);
+        min-height: calc(100vh - 120px); /* Adjusted for mobile banner + navbar */
     }
     
     .hero-content {
         padding-top: 30px;
-        min-height: calc(100vh - 150px);
+        min-height: calc(100vh - 120px); /* Adjusted for mobile banner + navbar */
         padding-bottom: 25px;
         justify-content: center;
         display: flex;
@@ -2269,6 +2276,7 @@ p {
     /* Mobile-specific improvements */
     .navbar {
         padding: 0.8rem 0;
+        top: 60px; /* Ensure mobile navbar is below banner */
     }
     
     .nav-container {
@@ -2276,8 +2284,8 @@ p {
     }
     
     .hero {
-        padding: 80px 0 2rem 0;
-        min-height: calc(100vh - 80px);
+        padding: 120px 0 2rem 0; /* Adjusted for mobile banner (60px) + navbar (60px) */
+        min-height: calc(100vh - 120px);
     }
     
     .about {
@@ -2366,7 +2374,7 @@ p {
     }
     
     .navbar {
-        top: 80px;
+        top: 80px; /* Adjusted for small mobile banner height */
         padding: 0.6rem 0;
     }
     
@@ -2461,7 +2469,7 @@ p {
     }
     
     .hero {
-        padding: 140px 0 3rem 0;
+        padding: 140px 0 3rem 0; /* Adjusted for small mobile banner (80px) + navbar (60px) */
         min-height: calc(100vh - 140px);
     }
     
