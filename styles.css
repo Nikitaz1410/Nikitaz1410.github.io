@@ -1912,55 +1912,9 @@ p {
 /* Mobile breakpoint */
 @media (max-width: 768px) {
     .application-banner {
-        padding: 0.6rem 0;
-        min-height: 60px; /* Smaller height on mobile */
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1001;
+        display: none; /* Hide banner completely on mobile */
     }
     
-    /* Hide clock icon on mobile to reduce banner size */
-    .banner-icon {
-        display: none;
-    }
-    
-    .banner-content {
-        padding: 0 15px;
-        flex-direction: column;
-        gap: 0.5rem;
-        min-height: 60px;
-        text-align: center;
-    }
-    
-    .banner-text {
-        order: 1;
-    }
-    
-    .banner-text strong {
-        font-size: 1rem;
-        display: block;
-    }
-    
-    .banner-text span {
-        font-size: 0.8rem;
-    }
-    
-    .banner-action {
-        order: 2;
-    }
-    
-    .banner-action .btn-banner {
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
-    }
-    
-    .banner-close {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-    }
     
     .hamburger {
         display: flex;
@@ -1970,7 +1924,7 @@ p {
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 120px; /* Adjusted for mobile banner (60px) + navbar (60px) */
+        top: 60px; /* Only navbar height since no banner on mobile */
         flex-direction: column;
         background-color: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(10px);
@@ -1981,7 +1935,7 @@ p {
         padding: 2rem 0;
         z-index: 1001;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
-        max-height: calc(100vh - 120px);
+        max-height: calc(100vh - 60px);
         overflow-y: auto;
     }
     
@@ -1989,10 +1943,6 @@ p {
         left: 0;
     }
     
-    /* When banner is closed on mobile */
-    .navbar.banner-closed .nav-menu {
-        top: 60px;
-    }
     
     .nav-menu li {
         margin: 0.5rem 0;
@@ -2030,12 +1980,12 @@ p {
         gap: 2rem;
         padding: 0 20px;
         align-items: center;
-        min-height: calc(100vh - 120px); /* Adjusted for mobile banner + navbar */
+        min-height: calc(100vh - 80px); /* Only navbar height since no banner on mobile */
     }
     
     .hero-content {
         padding-top: 30px;
-        min-height: calc(100vh - 120px); /* Adjusted for mobile banner + navbar */
+        min-height: calc(100vh - 80px); /* Only navbar height since no banner on mobile */
         padding-bottom: 25px;
         justify-content: center;
         display: flex;
@@ -2269,7 +2219,7 @@ p {
     /* Mobile-specific improvements */
     .navbar {
         padding: 0.8rem 0;
-        top: 60px; /* Ensure mobile navbar is below banner */
+        top: 0; /* No banner on mobile, so navbar goes to top */
     }
     
     .nav-container {
@@ -2277,8 +2227,8 @@ p {
     }
     
     .hero {
-        padding: 120px 0 2rem 0; /* Adjusted for mobile banner (60px) + navbar (60px) */
-        min-height: calc(100vh - 120px);
+        padding: 80px 0 2rem 0; /* Only navbar height since no banner on mobile */
+        min-height: calc(100vh - 80px);
     }
     
     .about {
@@ -2357,22 +2307,16 @@ p {
 /* Small mobile devices */
 @media (max-width: 480px) {
     .application-banner {
-        min-height: 80px;
-        padding: 0.8rem 0;
-    }
-    
-    .banner-content {
-        min-height: 80px;
-        padding: 0 10px;
+        display: none; /* Hide banner on small mobile devices too */
     }
     
     .navbar {
-        top: 80px; /* Adjusted for small mobile banner height */
+        top: 0; /* No banner on mobile, so navbar goes to top */
         padding: 0.6rem 0;
     }
     
     .nav-menu {
-        top: 140px; /* Adjusted for mobile banner (80px) + navbar (60px) */
+        top: 60px; /* Only navbar height since no banner on mobile */
     }
     .container {
         padding: 0 15px;
@@ -2462,18 +2406,18 @@ p {
     }
     
     .hero {
-        padding: 140px 0 3rem 0; /* Adjusted for small mobile banner (80px) + navbar (60px) */
-        min-height: calc(100vh - 140px);
+        padding: 80px 0 3rem 0; /* Only navbar height since no banner on mobile */
+        min-height: calc(100vh - 80px);
     }
     
     .hero-container {
-        min-height: calc(100vh - 140px);
+        min-height: calc(100vh - 80px); /* Only navbar height since no banner on mobile */
         padding: 0 15px;
     }
     
     .hero-content {
         padding-top: 25px;
-        min-height: calc(100vh - 140px);
+        min-height: calc(100vh - 80px); /* Only navbar height since no banner on mobile */
         padding-bottom: 25px;
     }
     
