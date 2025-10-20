@@ -523,7 +523,7 @@ p {
 
 /* Hero Section */
 .hero {
-    min-height: calc(100vh - 150px); /* Adjusted for banner (70px) + navbar (80px) */
+    min-height: calc(60vh - 150px); /* Adjusted for banner (70px) + navbar (80px) */
     display: flex;
     align-items: center;
     background: var(--gradient-hero-bg);
@@ -534,10 +534,39 @@ p {
 
 /* When banner is closed, adjust hero padding */
 .hero.banner-closed {
-    min-height: calc(100vh - 80px);
+    min-height: calc(60vh - 80px);
     padding-top: 80px;
 }
+.hero-checklist {
+  margin: 1.5rem 0 2rem;
+  text-align: left;
+  display: inline-block;
+  color: var(--text-default);
+  font-weight: 400;
+}
 
+.hero-checklist ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hero-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.hero-checklist i {
+  color: var(--color-accent);
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
 .hero::before {
     content: '';
     position: absolute;
@@ -570,7 +599,7 @@ p {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
-    min-height: calc(100vh - 160px);
+    min-height: calc(60vh - 160px);
 }
 
 .hero-content {
@@ -581,7 +610,7 @@ p {
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: calc(100vh - 160px);
+    min-height: calc(80vh - 160px);
     padding-top: 40px;
     padding-bottom: 25px;
 }
@@ -686,6 +715,7 @@ p {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .hero-buttons .btn {
@@ -806,7 +836,7 @@ p {
 
 /* About Section */
 .about {
-    padding: 8rem 0 6rem 0;
+    padding: 4rem 0 4rem 0;
     background: var(--color-white);
     margin-top: 4rem;
 }
@@ -1533,18 +1563,16 @@ p {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    /* push to card bottom and keep consistent spacing from the card edge */
+    margin-top: auto;
+    margin-bottom: 0.2rem;
+    align-self: center;
 }
 
 .team-linkedin img {
     width: 100%;
     height: 100%;
     display: block;
-}
-
-.team-image i {
-    font-size: 4rem;
-    color: var(--color-accent);
-    margin-bottom: 1rem;
 }
 
 .team-photo {
@@ -1565,7 +1593,7 @@ p {
 }
 
 .team-card h3 {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
     font-weight: 600;
 }
 
@@ -2121,9 +2149,8 @@ p {
     }
     
     .team-card {
-        padding: 1.8rem;
-        padding-bottom: 3.5rem; /* Extra space for LinkedIn icon */
-        max-width: 320px;
+        padding: 1.5rem;
+        max-width: 280px;
         width: 100%;
     }
     
@@ -2258,7 +2285,7 @@ p {
     
     .hero {
         padding: 80px 0 2rem 0; /* Only navbar height since no banner on mobile */
-        min-height: calc(100vh - 80px);
+        min-height: calc(60vh - 80px);
     }
     
     .about {
@@ -2398,8 +2425,7 @@ p {
     }
     
     .team-card {
-        padding: 1.2rem;
-        padding-bottom: 3.5rem; /* Extra space for LinkedIn icon */
+        padding: 1rem;
     }
 
     .team-linkedin {
@@ -2443,23 +2469,23 @@ p {
     
     .hero {
         padding: 80px 0 3rem 0; /* Only navbar height since no banner on mobile */
-        min-height: calc(100vh - 80px);
+        min-height: calc(60vh - 80px);
     }
     
     .hero-container {
-        min-height: calc(100vh - 80px); /* Only navbar height since no banner on mobile */
-        padding: 0 15px;
+        min-height: calc(60vh - 80px); /* Only navbar height since no banner on mobile */
+        padding: 0 px;
     }
     
     .hero-content {
         padding-top: 25px;
-        min-height: calc(100vh - 80px); /* Only navbar height since no banner on mobile */
-        padding-bottom: 25px;
+        min-height: calc(60vh - 80px); /* Only navbar height since no banner on mobile */
+        padding-bottom: 0px;
     }
     
     .about {
-        padding: 4rem 0 2rem 0;
-        margin-top: 4rem;
+        padding: 2rem 0 2rem 0;
+        margin-top: 1rem;
     }
     
     .mission,
@@ -2862,8 +2888,8 @@ p {
     .btn,
     .team-linkedin,
     .footer-social a {
-        min-height: 44px;
-        min-width: 44px;
+        min-height: 11px;
+        min-width: 11px;
         display: flex;
         align-items: center;
         justify-content: center;
