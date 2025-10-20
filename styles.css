@@ -5,13 +5,28 @@
     box-sizing: border-box;
 }
 
+:root {
+    --gradient-banner: linear-gradient(90deg, #4A98FF 0%, #4BFFC0 100%);
+    --gradient-brand: linear-gradient(90deg, #4A98FF 0%, #4BFFC0 100%);
+    --gradient-sheen: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    --gradient-sheen-strong: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    --gradient-hero-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --gradient-outline: linear-gradient(90deg, transparent, rgba(10, 45, 87, 0.1), transparent);
+    --gradient-alert: linear-gradient(135deg, #ff4757 0%, #ff6b7a 50%, #ff4757 100%);
+    --gradient-card-glow: linear-gradient(135deg, rgba(10, 45, 87, 0.1) 0%, rgba(74, 152, 255, 0.1) 50%, rgba(75, 255, 192, 0.1) 100%);
+    --gradient-diagonal-glow: linear-gradient(45deg, transparent, rgba(10, 45, 87, 0.1), transparent);
+    --gradient-urgent: linear-gradient(135deg, #4BFFC0 0%, #4A98FF 60%, #0A2D57 100%);
+    --gradient-section: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    --gradient-sky: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
 /* Application Deadline Banner */
 .application-banner {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(135deg, #0A2D57 0%, #4A98FF 50%, #4BFFC0 100%);
+    background: var(--gradient-banner);
     color: white;
     z-index: 1001;
     padding: 0.8rem 0;
@@ -297,7 +312,7 @@ p {
 
 /* Gradient Text */
 .gradient-text {
-    background: linear-gradient(135deg, #0A2D57 0%, #4A98FF 50%, #4BFFC0 100%);
+    background: var(--gradient-brand);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -326,7 +341,7 @@ p {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: var(--gradient-sheen);
     transition: left 0.5s;
 }
 
@@ -334,45 +349,41 @@ p {
     left: 100%;
 }
 
-.btn-primary {
-    background: linear-gradient(135deg, #0A2D57 0%, #4A98FF 50%, #4BFFC0 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(10, 45, 87, 0.3);
+.btn-gradient {
+    background: var(--gradient-brand);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 6px 20px rgba(10, 45, 87, 0.25);
 }
 
-.btn-primary:hover {
+.btn-gradient:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 15px 35px rgba(10, 45, 87, 0.6);
-    animation: glow 2s infinite;
+    box-shadow: 0 15px 35px rgba(10, 45, 87, 0.45);
 }
 
-.btn-secondary {
+.btn-white {
+    background: #ffffff;
+    color: #0A2D57;
+    border: none;
+    box-shadow: 0 4px 15px rgba(10, 45, 87, 0.12);
+}
+
+.btn-white:hover {
+    background: #f8f9fa;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(10, 45, 87, 0.18);
+}
+
+.btn-outline {
     background: transparent;
     color: #0A2D57;
     border: 2px solid #0A2D57;
-    position: relative;
+    box-shadow: none;
 }
 
-.btn-secondary::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    background: linear-gradient(135deg, #0A2D57 0%, #4A98FF 50%, #4BFFC0 100%);
-    transition: width 0.4s ease;
-    z-index: -1;
-}
-
-.btn-secondary:hover::after {
-    width: 100%;
-}
-
-.btn-secondary:hover {
-    color: white;
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 15px 35px rgba(10, 45, 87, 0.4);
+.btn-outline:hover {
+    background: rgba(10, 45, 87, 0.08);
+    color: #0A2D57;
 }
 
 /* Navigation */
@@ -468,7 +479,7 @@ p {
     min-height: calc(100vh - 150px); /* Adjusted for banner (70px) + navbar (80px) */
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: var(--gradient-hero-bg);
     position: relative;
     overflow: hidden;
     padding-top: 150px; /* Adjusted for banner (70px) + navbar (80px) */
@@ -576,7 +587,7 @@ p {
 }
 
 .application-notice-content {
-    background: linear-gradient(135deg, #0A2D57 0%, #4A98FF 50%, #4BFFC0 100%);
+    background: var(--gradient-brand);
     color: white;
     padding: 1rem 2rem;
     border-radius: 50px;
@@ -628,6 +639,17 @@ p {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+}
+
+.hero-buttons .btn {
+    min-width: 160px;
+}
+
+.hero-application-reminder {
+    margin-top: 1.2rem;
+    text-align: center;
+    font-weight: 600;
+    color: #0A2D57;
 }
 
 .hero-visual {
@@ -795,7 +817,7 @@ p {
 .image-placeholder {
     width: 300px;
     height: 300px;
-    background: linear-gradient(135deg, #0A2D57 0%, #4A98FF 50%, #4BFFC0 100%);
+    background: var(--gradient-brand);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -922,7 +944,7 @@ p {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(10, 45, 87, 0.1), transparent);
+    background: var(--gradient-outline);
     transition: left 0.6s ease;
 }
 
@@ -942,7 +964,7 @@ p {
 .growth-icon {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, #0A2D57 0%, #4A98FF 50%, #4BFFC0 100%);
+    background: var(--gradient-brand);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -973,7 +995,7 @@ p {
 
 /* Application Deadline Alert */
 .deadline-alert {
-    background: linear-gradient(135deg, #ff4757 0%, #ff6b7a 50%, #ff4757 100%);
+    background: var(--gradient-alert);
     border-radius: 20px;
     padding: 2rem;
     margin: 3rem 0;
@@ -1279,7 +1301,7 @@ p {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(10, 45, 87, 0.1) 0%, rgba(74, 152, 255, 0.1) 50%, rgba(75, 255, 192, 0.1) 100%);
+    background: var(--gradient-card-glow);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 1;
@@ -1301,7 +1323,7 @@ p {
 
 .project-image {
     height: 200px;
-    background: linear-gradient(135deg, #0A2D57 0%, #4A98FF 50%, #4BFFC0 100%);
+    background: var(--gradient-brand);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1416,7 +1438,7 @@ p {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(10, 45, 87, 0.1), transparent);
+    background: var(--gradient-diagonal-glow);
     transform: rotate(45deg);
     transition: all 0.6s ease;
     opacity: 0;
@@ -1501,7 +1523,7 @@ p {
 .team-avatar {
     width: 100px;
     height: 100px;
-    background: linear-gradient(135deg, #0A2D57 0%, #4A98FF 50%, #4BFFC0 100%);
+    background: var(--gradient-brand);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1587,7 +1609,7 @@ p {
 .contact-method i {
     width: 50px;
     height: 50px;
-    background: linear-gradient(135deg, #0A2D57 0%, #4A98FF 50%, #4BFFC0 100%);
+    background: var(--gradient-brand);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1757,53 +1779,6 @@ p {
     50% {
         opacity: 0.8;
         transform: scale(1.02);
-    }
-}
-
-/* Enhanced button animations for urgency */
-.btn-primary, .btn-secondary {
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-primary::after, .btn-secondary::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.6s ease;
-}
-
-.btn-primary:hover::after, .btn-secondary:hover::after {
-    left: 100%;
-}
-
-/* Urgent button styling for application buttons */
-.btn-urgent {
-    background: linear-gradient(135deg, #4BFFC0 0%, #4A98FF 60%, #0A2D57 100%);
-    color: white;
-    animation: urgentButtonPulse 2s ease-in-out infinite;
-    box-shadow: 0 5px 20px rgba(74, 152, 255, 0.35);
-    border: 2px solid #0A2D57;
-}
-
-.btn-urgent:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 10px 30px rgba(75, 255, 192, 0.45);
-    animation: none;
-}
-
-@keyframes urgentButtonPulse {
-    0%, 100% {
-        box-shadow: 0 5px 20px rgba(74, 152, 255, 0.35);
-        border-color: #0A2D57;
-    }
-    50% {
-        box-shadow: 0 8px 25px rgba(75, 255, 192, 0.45);
-        border-color: #4A98FF;
     }
 }
 
@@ -2508,7 +2483,7 @@ p {
 .journey-section {
     margin: 4rem 0;
     padding: 3rem 0;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: var(--gradient-section);
     border-radius: 20px;
 }
 
@@ -2524,7 +2499,7 @@ p {
     font-weight: 700;
     color: #2c3e50;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: var(--gradient-sky);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
