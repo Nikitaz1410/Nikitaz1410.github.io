@@ -2597,6 +2597,14 @@ p {
     text-align: center;
 }
 
+/* Ensure NGO benefits image adapts to container width on all screens */
+.journey-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
 .journey-content h3 {
     font-size: 2.5rem;
     font-weight: 700;
