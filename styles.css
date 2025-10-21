@@ -2361,6 +2361,18 @@ p {
     }
 }
 
+/* Center CTA buttons inside their boxes on mobile */
+@media (max-width: 768px) {
+    .recruitment-cta .btn,
+    .partners-cta .btn,
+    .sponsors-cta .btn {
+        width: max-content; /* override global mobile full-width */
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 /* Small mobile devices */
 @media (max-width: 480px) {
     .application-banner {
@@ -2431,6 +2443,17 @@ p {
     .team-linkedin {
         width: 20px;
         height: 20px;
+    }
+
+    /* Ensure CTA buttons stay centered on small mobile */
+    .recruitment-cta .btn,
+    .partners-cta .btn,
+    .sponsors-cta .btn {
+        width: max-content; /* override global mobile full-width */
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 280px;
     }
     
     .projects-grid {
