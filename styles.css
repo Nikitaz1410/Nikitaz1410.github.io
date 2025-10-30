@@ -436,7 +436,7 @@ p {
 /* Navigation */
 .navbar {
     position: fixed;
-    top: 70px; /* Adjusted for banner min-height */
+    top: 0;
     width: 100%;
     background: rgba(var(--color-white-rgb), 0.95);
     backdrop-filter: blur(10px);
@@ -523,13 +523,13 @@ p {
 
 /* Hero Section */
 .hero {
-    min-height: calc(60vh - 150px); /* Adjusted for banner (70px) + navbar (80px) */
+    min-height: calc(60vh - 80px);
     display: flex;
     align-items: center;
     background: var(--gradient-hero-bg);
     position: relative;
     overflow: hidden;
-    padding-top: 150px; /* Adjusted for banner (70px) + navbar (80px) */
+    padding-top: 80px;
 }
 
 /* When banner is closed, adjust hero padding */
@@ -599,7 +599,7 @@ p {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
-    min-height: calc(60vh - 160px);
+    min-height: calc(60vh - 80px);
 }
 
 .hero-content {
@@ -610,7 +610,7 @@ p {
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: calc(80vh - 160px);
+    min-height: calc(80vh - 80px);
     padding-top: 40px;
     padding-bottom: 25px;
 }
