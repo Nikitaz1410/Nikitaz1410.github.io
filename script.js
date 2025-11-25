@@ -114,12 +114,14 @@ if (contactForm) {
         e.preventDefault();
         
         // Get form data
-        const formData = new FormData(this);
         const nameInput = this.querySelector('input[name="name"]') || this.querySelector('input[type="text"]');
         const emailInput = this.querySelector('input[name="email"]') || this.querySelector('input[type="email"]');
         const subjectInput = this.querySelector('input[name="subject"]') || (this.querySelectorAll('input[type="text"]')[1] || null);
         const messageInput = this.querySelector('textarea[name="message"]') || this.querySelector('textarea');
         const roleInput = this.querySelector('select[name="role"]') || this.querySelector('select');
+        const gotchaInput = this.querySelector('input[name="_gotcha"]');
+        const hiddenSubjectInput = this.querySelector('input[name="_subject"]');
+        const formNameInput = this.querySelector('input[name="form_name"]');
         
         const name = nameInput ? nameInput.value.trim() : '';
         const email = emailInput ? emailInput.value.trim() : '';
@@ -137,14 +139,69 @@ if (contactForm) {
             showNotification('Please enter a valid email address', 'error');
             return;
         }
+        // Honeypot: if filled, silently treat as success without sending
+        if (gotchaInput && gotchaInput.value.trim().length > 0) {
+            showNotification('Thank you for your message!', 'success');
+            this.reset();
+            return;
+        }
         
-        // Open default mail client with prefilled email to contact@tum-social.com
-        const recipient = 'contact@tum-social.com';
-        const subjectLine = `[Website] ${subject}`;
-        const body = `Role: ${role || 'N/A'}\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
-        const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(body)}`;
-        showNotification('Opening your email app…', 'info');
-        window.location.href = mailtoLink;
+        // Server-side delivery via Formspree (or compatible JSON endpoint)
+        const endpoint = this.getAttribute('action') || '';
+        if (!endpoint || endpoint.includes('REPLACE_FORMSPREE_ID')) {
+            showNotification('Contact form is not configured. Please set a valid endpoint.', 'error');
+            return;
+        }
+        
+        const payload = {
+            role: role || '',
+            name,
+            email,
+            _replyto: email, // Formspree reply-to
+            _subject: hiddenSubjectInput && hiddenSubjectInput.value 
+                ? `${hiddenSubjectInput.value} - ${subject}` 
+                : `[Website] ${subject}`,
+            subject,
+            message,
+            form_name: formNameInput ? formNameInput.value : 'contact_form',
+            source: 'website-contact-form'
+        };
+        
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(async (res) => {
+            if (res.ok) {
+                showNotification('Thank you for your message! We\'ll get back to you soon.', 'success');
+                this.reset();
+            } else {
+                let errorMsg = 'Something went wrong. Please try again later.';
+                try {
+                    const data = await res.json();
+                    if (data && data.errors && data.errors.length) {
+                        errorMsg = data.errors.map(e => e.message).join(', ');
+                    }
+                } catch (_) {}
+                showNotification(errorMsg, 'error');
+            }
+        })
+        .catch(() => {
+            showNotification('Network error. Please check your connection and try again.', 'error');
+        })
+        .finally(() => {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
     });
 }
 

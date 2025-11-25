@@ -542,7 +542,10 @@
                 </div>
                 <div class="contact-form">
                     <h3>Send us a message</h3>
-                    <form>
+                    <form action="https://formspree.io/f/xanzpnye" method="POST">
+                        <input type="hidden" name="form_name" value="contact_form">
+                        <input type="hidden" name="_subject" value="Website Contact">
+                        <input type="text" name="_gotcha" style="display:none" autocomplete="off" tabindex="-1">
                         <div class="form-group">
                             <select name="role" required>
                                 <option value="">I am a...</option>
