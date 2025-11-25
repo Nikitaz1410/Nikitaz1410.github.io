@@ -544,7 +544,7 @@
                     <h3>Send us a message</h3>
                     <form>
                         <div class="form-group">
-                            <select required>
+                            <select name="role" required>
                                 <option value="">I am a...</option>
                                 <option value="student">Student (TUM/LMU/HM)</option>
                                 <option value="ngo">NGO Partner</option>
@@ -553,16 +553,16 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Your Name" required>
+                            <input type="text" name="name" placeholder="Your Name" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" placeholder="Your Email" required>
+                            <input type="email" name="email" placeholder="Your Email" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Subject" required>
+                            <input type="text" name="subject" placeholder="Subject" required>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Your Message" rows="5" required></textarea>
+                            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-gradient">Send Message</button>
                     </form>

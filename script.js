@@ -115,10 +115,17 @@ if (contactForm) {
         
         // Get form data
         const formData = new FormData(this);
-        const name = this.querySelector('input[type="text"]').value;
-        const email = this.querySelector('input[type="email"]').value;
-        const subject = this.querySelectorAll('input[type="text"]')[1].value;
-        const message = this.querySelector('textarea').value;
+        const nameInput = this.querySelector('input[name="name"]') || this.querySelector('input[type="text"]');
+        const emailInput = this.querySelector('input[name="email"]') || this.querySelector('input[type="email"]');
+        const subjectInput = this.querySelector('input[name="subject"]') || (this.querySelectorAll('input[type="text"]')[1] || null);
+        const messageInput = this.querySelector('textarea[name="message"]') || this.querySelector('textarea');
+        const roleInput = this.querySelector('select[name="role"]') || this.querySelector('select');
+        
+        const name = nameInput ? nameInput.value.trim() : '';
+        const email = emailInput ? emailInput.value.trim() : '';
+        const subject = subjectInput ? subjectInput.value.trim() : '';
+        const message = messageInput ? messageInput.value.trim() : '';
+        const role = roleInput ? roleInput.value : '';
         
         // Simple validation
         if (!name || !email || !subject || !message) {
@@ -131,18 +138,13 @@ if (contactForm) {
             return;
         }
         
-        // Simulate form submission
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            showNotification('Thank you for your message! We\'ll get back to you soon.', 'success');
-            this.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 2000);
+        // Open default mail client with prefilled email to contact@tum-social.com
+        const recipient = 'contact@tum-social.com';
+        const subjectLine = `[Website] ${subject}`;
+        const body = `Role: ${role || 'N/A'}\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+        const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(body)}`;
+        showNotification('Opening your email app…', 'info');
+        window.location.href = mailtoLink;
     });
 }
 
