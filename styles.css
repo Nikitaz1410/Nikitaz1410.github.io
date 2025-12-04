@@ -470,9 +470,8 @@ p {
     transition: transform 0.3s ease;
 }
 
-/* Top bar logo 50% smaller */
 .navbar .logo-img {
-    height: 18.75px;
+    height: 20px;
 }
 
 .logo-img:hover {
@@ -1446,6 +1445,19 @@ p {
     overflow: hidden;
 }
 
+/* Variant: show full logos on white background */
+.project-image.logo {
+    background: #ffffff;
+    padding: 1rem;
+}
+
+.project-image.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #ffffff;
+}
+
 .project-image i {
     font-size: 4rem;
     color: var(--color-white);
@@ -1473,6 +1485,15 @@ p {
     
     .project-image {
         height: 180px; /* Slightly smaller on mobile */
+    }
+    .project-image.logo {
+        height: 160px;
+        padding: 0.75rem;
+        background: #ffffff;
+    }
+    .project-image.logo img {
+        height: 100%;
+        object-fit: contain;
     }
     
     .team-photo {
@@ -2287,9 +2308,8 @@ p {
         height: 45px;
     }
     
-    /* Keep navbar logo 50% smaller on tablet/mobile */
     .navbar .logo-img {
-        height: 13.75px;
+        height: 14px;
     }
     
     .footer-logo .logo-img {
@@ -2605,9 +2625,8 @@ p {
         height: 40px;
     }
     
-    /* Keep navbar logo 50% smaller on small mobile */
     .navbar .logo-img {
-        height: 12.5px;
+        height: 14px;
     }
     
     .footer-logo .logo-img {
