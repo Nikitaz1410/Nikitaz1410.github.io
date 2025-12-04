@@ -470,6 +470,11 @@ p {
     transition: transform 0.3s ease;
 }
 
+/* Top bar logo 50% smaller */
+.navbar .logo-img {
+    height: 30px;
+}
+
 .logo-img:hover {
     transform: scale(1.1);
 }
@@ -2282,6 +2287,11 @@ p {
         height: 45px;
     }
     
+    /* Keep navbar logo 50% smaller on tablet/mobile */
+    .navbar .logo-img {
+        height: 22px;
+    }
+    
     .footer-logo .logo-img {
         height: 60px;
     }
@@ -2593,6 +2603,11 @@ p {
     
     .logo-img {
         height: 40px;
+    }
+    
+    /* Keep navbar logo 50% smaller on small mobile */
+    .navbar .logo-img {
+        height: 20px;
     }
     
     .footer-logo .logo-img {
