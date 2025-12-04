@@ -318,6 +318,40 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Update days counter on page load
     updateDaysCounter();
+    
+    // Make partner NGO project cards clickable (open external links)
+    const partnerLinkMap = [
+        { selector: 'img[src="pictures/UNWOMEN.png"]', url: 'https://unwomen.de/' },
+        { selector: 'img[src="pictures/Entreculturas.jpg"]', url: 'https://www.entreculturas.org/en/' },
+        { selector: 'img[src="pictures/Kulturator.png"]', url: 'https://kulturator.de/' },
+        { selector: 'img[src="pictures/logo_IG.jpg"]', url: 'https://www.initiativgruppe.de/' }
+    ];
+    
+    partnerLinkMap.forEach(({ selector, url }) => {
+        const img = document.querySelector(selector);
+        if (!img) return;
+        const card = img.closest('.project-card');
+        if (!card) return;
+        
+        // Accessibility
+        card.setAttribute('role', 'link');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-label', `Open partner website: ${url}`);
+        
+        const openLink = (e) => {
+            // Don't override clicks on nested anchors
+            if (e.target && e.target.closest('a')) return;
+            window.open(url, '_blank', 'noopener');
+        };
+        
+        card.addEventListener('click', openLink);
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openLink(e);
+            }
+        });
+    });
 });
 
 // Calculate days since founding date (August 1st, 2025)

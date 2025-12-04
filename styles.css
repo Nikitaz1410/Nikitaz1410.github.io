@@ -1550,6 +1550,30 @@ p {
     margin-top: 2rem;
 }
 
+/* Team batch (group photo) block */
+.team-batch {
+    margin: 1rem 0 2rem 0;
+    text-align: center;
+}
+
+.team-batch-image {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.team-batch-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.team-batch-caption {
+    margin-top: 0.6rem;
+    font-weight: 600;
+    color: #333;
+}
+
 /* Ensure exactly 5 columns on large screens for a 2x5 layout */
 @media (min-width: 1200px) {
     .team-grid {
