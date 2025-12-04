@@ -472,7 +472,7 @@ p {
 
 /* Top bar logo 50% smaller */
 .navbar .logo-img {
-    height: 30px;
+    height: 15px;
 }
 
 .logo-img:hover {
@@ -2289,7 +2289,7 @@ p {
     
     /* Keep navbar logo 50% smaller on tablet/mobile */
     .navbar .logo-img {
-        height: 22px;
+        height: 11px;
     }
     
     .footer-logo .logo-img {
@@ -2607,7 +2607,7 @@ p {
     
     /* Keep navbar logo 50% smaller on small mobile */
     .navbar .logo-img {
-        height: 20px;
+        height: 10px;
     }
     
     .footer-logo .logo-img {
